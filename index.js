@@ -10,7 +10,9 @@ MCourserCommunication.prototype.EVENTS_MAP = {
     HANDSHAKE: 'HANDSHAKE',
     REQUEST_USER_DATA: 'REQUEST_USER_DATA',
     REQUEST_COLLECTIONS_DATA: 'REQUEST_COLLECTIONS_DATA',
-    COLLECTIONS_DATA: 'COLLECTIONS_DATA'
+    REQUEST_COLLECTION_DATA: 'REQUEST_COLLECTION_DATA',
+    COLLECTIONS_DATA: 'COLLECTIONS_DATA',
+    COLLECTION_DATA: 'COLLECTION_DATA'
 }
 
 MCourserCommunication.prototype.init = function () {
@@ -63,7 +65,23 @@ MCourserCommunication.prototype.requestCollectionsData = function () {
     return this._connectIntoEvent(this.EVENTS_MAP.COLLECTIONS_DATA)
 }
 
-MCourserCommunication.prototype._connectIntoEvent = function (type) {
+MCourserCommunication.prototype.requestCollectionData = function (id) {
+    if (!this.initialized) {
+        throw new Error('This communication is not initialized!');
+    }
+
+    this._sendEvent(this.EVENTS_MAP.REQUEST_COLLECTION_DATA, {id: id})
+    return this._connectIntoEvent(this.EVENTS_MAP.COLLECTION_DATA, function (collectionData) {
+        var data = collectionData.data;
+        if (!data) {
+            return false;
+        }
+
+        return data.id === id;
+    });
+}
+
+MCourserCommunication.prototype._connectIntoEvent = function (type, matchEvent) {
     var pResolve, pReject;
     var promise = new Promise (function (resolve, reject) {
         pResolve = resolve;
@@ -75,7 +93,8 @@ MCourserCommunication.prototype._connectIntoEvent = function (type) {
         promise: {
             resolve: pResolve,
             reject: pReject
-        }
+        },
+        matchEvent: matchEvent || function () {return true} // In case if we want to match specific ID or different field
     };
     this.eventsListeners.push(event);
 
@@ -101,12 +120,22 @@ MCourserCommunication.prototype._runMessagesListener = function () {
                 }
 
                 if (event.name === type) {
+                    try {
+                        if (!event.matchEvent(message.data)) {
+                            return true;
+                        }    
+                    } catch (error) {
+                        return true;
+                    }
+
                     called = true;
                     try {
                         event.promise.resolve(message.data);
                     } finally {
                         return false;
                     }
+                } else {
+                    return true;
                 }
             });
         }
@@ -120,11 +149,33 @@ communication.init().then(function (data) {
     console.log("Initialization status: ", data);
     if (data) {
         updateIframeHeight();
-        communication.requestCollectionsData().then(function (data) { 
-            console.log(data);
+        communication.requestCollectionsData().then(function (data) {
+            var found = false; 
+            data.data.forEach(function (el) {
+                if (el.mAuthorId === 5392122382909440) {
+                    found = true;
+                    manageAvailable(el);
+                }
+            });
+
+            if (!found) {
+                manageNotAvailable();
+            }
         })
     }
 });
+
+
+function manageNotAvailable() {
+    console.log("Not available");
+}
+
+function manageAvailable(collectionData) {
+    console.log("Manage available", collectionData);
+    communication.requestCollectionData(collectionData.id).then(function (data) {
+        console.log(data);
+    });
+}
 
 function updateIframeHeight () {
     var height = window.document.documentElement.getBoundingClientRect().height;
