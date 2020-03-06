@@ -144,40 +144,40 @@ MCourserCommunication.prototype._runMessagesListener = function () {
     this.evCallback = listener;
 }
 
-var communication = new MCourserCommunication();
-communication.init().then(function (data) {
-    console.log("Initialization status: ", data);
-    if (data) {
-        updateIframeHeight();
-        communication.requestCollectionsData().then(function (data) {
-            var found = false; 
-            data.data.forEach(function (el) {
-                if (el.mAuthorId === 5392122382909440) {
-                    found = true;
-                    manageAvailable(el);
-                }
-            });
+// var communication = new MCourserCommunication();
+// communication.init().then(function (data) {
+//     console.log("Initialization status: ", data);
+//     if (data) {
+//         updateIframeHeight();
+//         communication.requestCollectionsData().then(function (data) {
+//             var found = false; 
+//             data.data.forEach(function (el) {
+//                 if (el.mAuthorId === 5392122382909440) {
+//                     found = true;
+//                     manageAvailable(el);
+//                 }
+//             });
 
-            if (!found) {
-                manageNotAvailable();
-            }
-        })
-    }
-});
+//             if (!found) {
+//                 manageNotAvailable();
+//             }
+//         })
+//     }
+// });
 
 
-function manageNotAvailable() {
-    console.log("Not available");
-}
+// function manageNotAvailable() {
+//     console.log("Not available");
+// }
 
-function manageAvailable(collectionData) {
-    console.log("Manage available", collectionData);
-    communication.requestCollectionData(collectionData.id).then(function (data) {
-        console.log(data);
-    });
-}
+// function manageAvailable(collectionData) {
+//     console.log("Manage available", collectionData);
+//     communication.requestCollectionData(collectionData.id).then(function (data) {
+//         console.log(data);
+//     });
+// }
 
-function updateIframeHeight () {
-    var height = window.document.documentElement.getBoundingClientRect().height;
-    communication.updateIFrameHeight(height);
-}
+// function updateIframeHeight () {
+//     var height = window.document.documentElement.getBoundingClientRect().height;
+//     communication.updateIFrameHeight(height);
+// }
