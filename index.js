@@ -24,9 +24,9 @@ MCourserCommunication.prototype.init = function () {
 
     this._runMessagesListener();
     var promise = new Promise(function (resolve, reject) {
-        this._connectIntoEvent(this.EVENTS_MAP.HANDSHAKE).then(function () {
+        this._connectIntoEvent(this.EVENTS_MAP.HANDSHAKE).then(function (data) {
             this.initialized = true;
-            resolve(true);
+            resolve(data.isAuthenticated);
         }.bind(this));
     }.bind(this));
 
@@ -143,41 +143,3 @@ MCourserCommunication.prototype._runMessagesListener = function () {
     window.addEventListener('message', listener);
     this.evCallback = listener;
 }
-
-// var communication = new MCourserCommunication();
-// communication.init().then(function (data) {
-//     console.log("Initialization status: ", data);
-//     if (data) {
-//         updateIframeHeight();
-//         communication.requestCollectionsData().then(function (data) {
-//             var found = false; 
-//             data.data.forEach(function (el) {
-//                 if (el.mAuthorId === 5392122382909440) {
-//                     found = true;
-//                     manageAvailable(el);
-//                 }
-//             });
-
-//             if (!found) {
-//                 manageNotAvailable();
-//             }
-//         })
-//     }
-// });
-
-
-// function manageNotAvailable() {
-//     console.log("Not available");
-// }
-
-// function manageAvailable(collectionData) {
-//     console.log("Manage available", collectionData);
-//     communication.requestCollectionData(collectionData.id).then(function (data) {
-//         console.log(data);
-//     });
-// }
-
-// function updateIframeHeight () {
-//     var height = window.document.documentElement.getBoundingClientRect().height;
-//     communication.updateIFrameHeight(height);
-// }
