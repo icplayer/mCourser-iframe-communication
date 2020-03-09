@@ -12,8 +12,12 @@ MCourserCommunication.prototype.EVENTS_MAP = {
     REQUEST_COLLECTIONS_DATA: 'REQUEST_COLLECTIONS_DATA',
     REQUEST_COLLECTION_DATA: 'REQUEST_COLLECTION_DATA',
     COLLECTIONS_DATA: 'COLLECTIONS_DATA',
-    COLLECTION_DATA: 'COLLECTION_DATA'
-}
+    COLLECTION_DATA: 'COLLECTION_DATA',
+    REQUEST_CROSS_RESOURCE: 'REQUEST_CROSS_RESOURCE',
+    REQUEST_LESSON: 'REQUEST_LESSON',
+    REQUEST_COLLECTION_DATA_BY_URL: 'REQUEST_COLLECTION_DATA_BY_URL',
+    COLLECTION_DATA_BY_URL: 'COLLECTION_DATA_BY_URL',
+};
 
 MCourserCommunication.prototype.init = function () {
     if (this.calledInit) {
@@ -32,7 +36,7 @@ MCourserCommunication.prototype.init = function () {
 
     this._sendEvent(this.EVENTS_MAP.HANDSHAKE, {});
     return promise;
-}
+};
 
 MCourserCommunication.prototype.destroy = function () {
     if (!this.initialized) {
@@ -46,7 +50,7 @@ MCourserCommunication.prototype.destroy = function () {
     });
     this.eventsListeners = [];
     this.evCallback = null;
-}
+};
 
 MCourserCommunication.prototype.updateIFrameHeight = function (newHeight) {
     if (!this.initialized) {
@@ -54,7 +58,7 @@ MCourserCommunication.prototype.updateIFrameHeight = function (newHeight) {
     }
 
     this.top.postMessage('mCurriculum_RESIZE:0:' + newHeight, '*');
-}
+};
 
 MCourserCommunication.prototype.requestCollectionsData = function () {
     if (!this.initialized) {
@@ -63,7 +67,7 @@ MCourserCommunication.prototype.requestCollectionsData = function () {
 
     this._sendEvent(this.EVENTS_MAP.REQUEST_COLLECTIONS_DATA, {});
     return this._connectIntoEvent(this.EVENTS_MAP.COLLECTIONS_DATA)
-}
+};
 
 MCourserCommunication.prototype.requestCollectionData = function (id) {
     if (!this.initialized) {
@@ -79,7 +83,51 @@ MCourserCommunication.prototype.requestCollectionData = function (id) {
 
         return data.id === id;
     });
-}
+};
+
+MCourserCommunication.prototype.requestCollectionDataByURL = function (publisherURL, collectionURL) {
+    if (!this.initialized) {
+        throw new Error('This communication is not initialized!');
+    }
+
+    this._sendEvent(this.EVENTS_MAP.REQUEST_COLLECTION_DATA_BY_URL, {
+        publisherURL: publisherURL,
+        collectionURL: collectionURL
+    });
+
+    return this._connectIntoEvent(this.EVENTS_MAP.COLLECTION_DATA_BY_URL, function (collectionData) {
+        var data = collectionData.data;
+        if (!data) {
+            return false;
+        }
+
+        return data.collectionURL === collectionURL && publisherURL === publisherURL;
+    });
+};
+
+MCourserCommunication.prototype.requestCrossResource = function (resourceId, lessonId, courseId, pageId, lessonType) {
+    if (!this.initialized) {
+        throw new Error('This communication is not initialized!');
+    }
+    
+    this._sendEvent(this.EVENTS_MAP.REQUEST_CROSS_RESOURCE, {
+        resourceId: resourceId,
+        lessonId: lessonId,
+        courseId: courseId,
+        pageId: pageId,
+        lessonType: lessonType
+    });
+};
+
+MCourserCommunication.prototype.requestOpenLesson = function (lessonID) {
+    if (!this.initialized) {
+        throw new Error('This communication is not initialized!');
+    }
+
+    this._sendEvent(this.EVENTS_MAP.REQUEST_LESSON, {
+        lessonId: lessonID
+    });
+};
 
 MCourserCommunication.prototype._connectIntoEvent = function (type, matchEvent) {
     var pResolve, pReject;
@@ -99,14 +147,14 @@ MCourserCommunication.prototype._connectIntoEvent = function (type, matchEvent) 
     this.eventsListeners.push(event);
 
     return promise;
-}
+};
 
 MCourserCommunication.prototype._sendEvent = function (type, data) {
     var copy={};
     Object.assign(copy, data);
     data['type'] = type;
     this.top.postMessage(data, '*')
-}
+};
 
 MCourserCommunication.prototype._runMessagesListener = function () {
     var listener = function (message) {
@@ -142,4 +190,4 @@ MCourserCommunication.prototype._runMessagesListener = function () {
     }.bind(this);
     window.addEventListener('message', listener);
     this.evCallback = listener;
-}
+};
