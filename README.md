@@ -1,2 +1,87 @@
 # mCourser-iframe-communication
-mCourser iframe communication
+Simple library for simplify communication with mCourser platform.
+
+### Supported commands:
+ * init() - initialize communication. If communication is not initialized it is not possible to communicate. Returns promise. As promise response returns boolean, which tells if user is authenticated
+ * destoy() - destroy initialized communication. All listeners are removed. If mCourser returns data after destroy it will not be managed by communication. Does not have response.
+ * updateIframeHeight(newHeight) - Set new height for embeded iframe. Does not have response.
+ * requestCollectionsData() - Get all available collections for current user. Requires authenticated user. Returns response. As promise response returns: 
+```typescript
+interface ICollectionsData {
+    data: {
+        id: number;
+        mAuthorId: number;
+        title: string;
+        score: number;
+        errors: number;
+        time: number;
+    }[];
+    type: string;
+}
+```
+ * requestCollectionData(collectionId) - Get information about specific collection. Returns promise. As promise response returns: 
+```typescript
+interface ICollectionData {
+        type: string;
+        data: {
+            id: number;
+            mAuthorId: number;
+            lessons: {
+                id: string;
+                name: string;
+                type: typeof type;
+                chapter: number | null;
+                icon: string;
+                description: string;
+                definedId: string;
+                errors: number;
+                time: number;
+                score: number;
+            }[];
+            chapters: {
+                id: number,
+                parent: number,
+                title: string,
+                description: string
+            }[];
+        };
+    }
+```
+ * requestCollectionDataByURL(publisherURL, collectionURL) - Get public information about collection by collection and publisher URLs. Returns promise. As promise reponses:
+```typescript
+interface IPublicCollectionData {
+    type: string;
+    data: {
+        id: number;
+        mAuthorId: number;
+        collectionURL: string;
+        publisherURL: string;
+        sampleLessons: {
+            id: number;
+            icon: string;
+            title: string;
+            description: string;
+            type: typeof type;
+        }[];
+        sampleLessonsDescription: string;
+        screenShots: string[];
+        screenShotsDescription: string;
+        lessons: {
+            name: string;
+            type: typeof type;
+            chapter: number | null;
+            icon: string;
+            description: string;
+            definedId: string;
+        }[];
+        chapters: {
+            id: number,
+            parent: number,
+            title: string,
+            description: string
+        }[];
+    };
+}
+```
+ * requestCrossResource(resourceId, lessonId, courseId, pageId, lessonType) - Open new lesson from different course. Resource id is any id of lesson in selected publisher. lessonId is id defined on mAuthor for specific lesson. courseId is id of course on mAuthor. This argument is optional. pageId is id from editor. This argument is optional. lessonType - lesson can be 'ebook' type or 'lesson' type. 'lesson' is set as default. This method does not return data. User may not have access to selected lesson. If courseId is not set, lesson is selected relative to resourceId.
+ * requestOpenLesson(lessonId) - open lesson by lesson id field. This method does not return data.

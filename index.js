@@ -95,7 +95,7 @@ MCourserCommunication.prototype.requestCollectionDataByURL = function (publisher
         collectionURL: collectionURL
     });
 
-    return this._connectIntoEvent(this.EVENTS_MAP.COLLECTION_DATA_BY_URL, function (collectionData) {
+    return this._connectIntoEvent(this.EVENTS_MAP.COLLECTION_DATA_BY_URL, function (collectionData) { 
         var data = collectionData.data;
         if (!data) {
             return false;
