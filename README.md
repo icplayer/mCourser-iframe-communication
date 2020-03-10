@@ -29,7 +29,7 @@ interface ICollectionData {
             lessons: {
                 id: string;
                 name: string;
-                type: typeof type;
+                type: 'mauthor_lesson' |'mauthor_ebook' | 'minstructor_lesson' | 'demo_lesson' | 'url_link' | 'file';
                 chapter: number | null;
                 icon: string;
                 description: string;
@@ -61,14 +61,14 @@ interface IPublicCollectionData {
             icon: string;
             title: string;
             description: string;
-            type: typeof type;
+            type: 'mauthor_lesson' |'mauthor_ebook' | 'minstructor_lesson' | 'demo_lesson' | 'url_link' | 'file';
         }[];
         sampleLessonsDescription: string;
         screenShots: string[];
         screenShotsDescription: string;
         lessons: {
             name: string;
-            type: typeof type;
+            type: 'mauthor_lesson' |'mauthor_ebook' | 'minstructor_lesson' | 'demo_lesson' | 'url_link' | 'file';
             chapter: number | null;
             icon: string;
             description: string;
@@ -85,3 +85,19 @@ interface IPublicCollectionData {
 ```
  * requestCrossResource(resourceId, lessonId, courseId, pageId, lessonType) - Open new lesson from different course. Resource id is any id of lesson in selected publisher. lessonId is id defined on mAuthor for specific lesson. courseId is id of course on mAuthor. This argument is optional. pageId is id from editor. This argument is optional. lessonType - lesson can be 'ebook' type or 'lesson' type. 'lesson' is set as default. This method does not return data. User may not have access to selected lesson. If courseId is not set, lesson is selected relative to resourceId.
  * requestOpenLesson(lessonId) - open lesson by lesson id field. This method does not return data.
+
+ ### Example usage:
+ ```Javascript
+ var communication = new MCourserCommunication();
+ communication.init().then(function (isAuth) {
+     if (!isAuth) {
+         renderExamplesPage();
+     } else {
+         communication.requestCollectionsData().then(function (collections) {
+             renderCollection(collections);
+         });
+     }
+ });
+ ```
+
+ For more usage see examples directory.
