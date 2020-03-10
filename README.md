@@ -101,3 +101,17 @@ interface IPublicCollectionData {
  ```
 
  For more usage see examples directory.
+
+
+ ### Installation
+ If you want to use this library in custom table of content, use https://www.jsdelivr.com/ application. It provides CDN for github files.
+ #### Example:
+```HTML
+<script src="https://cdn.jsdelivr.net/gh/icplayer/mCourser-iframe-communication/index.js"></script>
+```
+Or for minified version:
+```HTML
+<script src="https://cdn.jsdelivr.net/gh/icplayer/mCourser-iframe-communication/index.min.js"></script>
+```
+
+Note that, this is latest version of library. It may provide compatibility issues in the future. For more information about serving specific version see: https://www.jsdelivr.com/features
