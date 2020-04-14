@@ -97,6 +97,7 @@ interface IPublicCollectionData {
 }
 ```
  * requestCrossResource(resourceId, lessonId, courseId, pageId, lessonType) - Open new lesson from different course. Resource id is any id of lesson in selected publisher. lessonId is id defined on mAuthor for specific lesson. courseId is id of course on mAuthor. This argument is optional. pageId is id from editor. This argument is optional. lessonType - lesson can be 'ebook' type or 'lesson' type. 'lesson' is set as default. This method does not return data. User may not have access to selected lesson. If courseId is not set, lesson is selected relative to resourceId.
+ * requestLoginView() - Open login view in mCourser Application.
  * requestOpenLesson(lessonId) - open lesson by lesson id field. This method does not return data.
 
  ### Example usage:

@@ -18,7 +18,8 @@ MCourserCommunication.prototype.EVENTS_MAP = {
     REQUEST_COLLECTION_DATA_BY_URL: 'REQUEST_COLLECTION_DATA_BY_URL',
     COLLECTION_DATA_BY_URL: 'COLLECTION_DATA_BY_URL',
     REQUEST_FIRESTORE_CUSTOM_TOKEN: 'REQUEST_FIRESTORE_CUSTOM_TOKEN',
-    FIRESTORE_CUSTOM_TOKEN: 'FIRESTORE_CUSTOM_TOKEN'
+    FIRESTORE_CUSTOM_TOKEN: 'FIRESTORE_CUSTOM_TOKEN',
+    REQUEST_LOGIN_VIEW: 'REQUEST_LOGIN_VIEW'
 };
 
 MCourserCommunication.prototype.init = function () {
@@ -139,6 +140,14 @@ MCourserCommunication.prototype.requestFirestoreToken = function () {
     this._sendEvent(this.EVENTS_MAP.REQUEST_FIRESTORE_CUSTOM_TOKEN);
 
     return this._connectIntoEvent(this.EVENTS_MAP.FIRESTORE_CUSTOM_TOKEN);
+}
+
+MCourserCommunication.prototype.requestLoginView = function () {
+    if (!this.initialized) {
+        throw new Error('This communication is not initialized!');
+    }
+
+    this._sendEvent(this.EVENTS_MAP.REQUEST_LOGIN_VIEW);
 }
 
 MCourserCommunication.prototype._connectIntoEvent = function (type, matchEvent) {
