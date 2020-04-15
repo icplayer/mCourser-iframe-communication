@@ -16,7 +16,7 @@ Note that, this is latest version of library. It may provide compatibility issue
 
 ### Supported commands:
  * init() - initialize communication. If communication is not initialized it is not possible to communicate. Returns promise. As promise response returns boolean, which tells if user is authenticated
- * destoy() - destroy initialized communication. All listeners are removed. If mCourser returns data after destroy it will not be managed by communication. Does not have response.
+ * destroy() - destroy initialized communication. All listeners are removed. If mCourser returns data after destroy it will not be managed by communication. Does not have response.
  * updateIframeHeight(newHeight) - Set new height for embeded iframe. Does not have response.
  * requestCollectionsData() - Get all available collections for current user. Requires authenticated user. Returns response. As promise response returns: 
 ```typescript
