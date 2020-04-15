@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Simple example</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
+    <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/icplayer/mCourser-iframe-communication@26713c2e3e77b9e2ed7317a01df33cbc73045ef9/index.js"></script>
+    <style>
+        body {
+            height: 100%;
+            background-color: #F5F5F5;
+        }
+
+        #root {
+            display: flex;
+            justify-content: center;
+        }
+
+        .button-wrapper {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+        }
+    </style>
+    <script>
+        function onBodyLoad () {
+            var button = document.getElementById("login-button");
+            var communication = new MCourserCommunication();
+            button.addEventListener("click", function () {
+                communication.init().then(function () {
+                    communication.requestLoginView();
+                });
+            });
+        }
+    </script>
+  </head>
+  <body onload="onBodyLoad()">
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <div id="root" class="mdl-grid">
+        <div class="mdl-cell--6-col">
+            <h4>Accessing resources</h4>
+            <p>All eBooks and programs on the <b>mCourser.com</b> platform are available as collections in the Collections section. Some of them are free, while others can be purchased directly on the Platform and activated using the activation code received via e-mail. In turn, the purchased programs can be activated on the Platform by entering the unlocking code to be found on the license. Information on how to access resources is available on the Details page, after selecting the appropriate collection.</p>
+            <div class="button-wrapper"><button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" id="login-button">
+                Log in
+            </button>
+            </div>
+        </div>
+    </div>
+  </body>
+</html>

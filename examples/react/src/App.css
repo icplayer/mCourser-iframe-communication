@@ -1,0 +1,16 @@
+@import "~react-image-gallery/styles/css/image-gallery.css";
+
+.image-gallery {
+  width: 15%;
+  height: 15%;
+  min-width: 15%;
+  min-height: 15%;
+  overflow: hidden;
+  margin: 10px;
+}
+
+.image-gallery-image {
+  width: 100%;
+  height: 100%;
+  max-height: initial !important;
+}
