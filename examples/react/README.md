@@ -2,12 +2,12 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ### Configuration
 There is configuration file, which gives possibility to customize ToC.
- * LOOKING_FOOR_COURSE_ID: Which course are beeing shown.
- * CROSS_LESSON_DEFINED_ID: Which lesson cross resource button should open.
- * CROSS_LESSON_COURSE_ORIGINAL_ID: In which course cross lesson should search.
- * APPLICATION_BASE_URL: To which url urls should be concated.
- * PUBLIC_PUBLISHER_URL: Which publisher have information about couse public information.
- * PUBLIC_COURSE_URL: Which couse should be visible if user is not logged in (public).
+ * LOOKING_FOOR_COURSE_ID: Which course are beeing shown. See Course ID in collection description in README file.
+ * CROSS_LESSON_DEFINED_ID: Which lesson cross resource button should open. See Lesson description in README. file.
+ * CROSS_LESSON_COURSE_ORIGINAL_ID: In which course cross lesson should search. See mAuthor ID in collection description in README file.
+ * APPLICATION_BASE_URL: To which url urls should be concated. Used for building URLs. See requestCollectionDataByURL API documentation.
+ * PUBLIC_PUBLISHER_URL: Which publisher have information about couse public information. See requestCollectionDataByURL API.
+ * PUBLIC_COURSE_URL: Which couse should be visible if user is not logged in (public). See requestCollectionDataByURL API.
 
 ## Available Scripts
 
