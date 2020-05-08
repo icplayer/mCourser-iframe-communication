@@ -69,7 +69,7 @@ interface ICollectionData {
         };
     }
 ```
-####Collection description:
+#### Collection description:
 
 | Property name | Description |
 | ------------- | ----------- |
@@ -78,7 +78,7 @@ interface ICollectionData {
 | lessons       | List of lessons in the course. See [Lessons description](#lesson-description) |
 | chapters      | List of chapters in the course. See [Chapters description](#chapter-description)|
  
-####Lesson description:
+#### Lesson description:
 
 | Property name | Description |
 | ------------- | ----------- |
@@ -93,7 +93,7 @@ interface ICollectionData {
 | time          | How long user spent in the lesson. |
 | score         | Score which have been received by user. |
 
-####Chapter description
+#### Chapter description
 
 | Property name | Description |
 | ------------- | ----------- |
