@@ -1,8 +1,8 @@
 # mCourser-iframe-communication
-Simple library to simplify communication with mCourser platform.
+A simple library to simplify communication with mCourser platform.
 
 ### Installation
-If you want to use this library in custom table of content, use https://www.jsdelivr.com/ application. It provides CDN for github files.
+In case of usage this library in a project, you can use https://www.jsdelivr.com/ It helps with providing GitHub files as CND.
 #### Example:
 ```HTML
 <script src="https://cdn.jsdelivr.net/gh/icplayer/mCourser-iframe-communication/index.js"></script>
@@ -15,10 +15,10 @@ Or for minified version:
 Note that, this is latest version of library. It may provide compatibility issues in the future. For more information about serving specific version see: https://www.jsdelivr.com/features
 
 ### Supported commands:
- * init() - initialize communication. If communication is not initialized it is not possible to communicate. Returns promise. As promise response returns boolean, which tells if user is authenticated
- * destroy() - destroy initialized communication. All listeners are removed. If mCourser returns data after destroy it will not be managed by communication. Does not have response.
+ * init() - initialize the communication. If the communication is not initialized it is not possible to send messages into mCourser. Returns promise. As promise response returns boolean, which tells if user is authenticated
+ * destroy() - destroy initialized communication. All listeners are removed. If mCourser returns data after destroy, response is not be managed by communication. Does not have response.
  * updateIframeHeight(newHeight) - Set new height for embeded iframe. Does not have response.
- * requestCollectionsData() - Get all available collections for current user. Requires authenticated user. Returns response. As promise response returns: 
+ * requestCollectionsData() - Get all available collections for current user. Requires authenticated user. Returns a response. As the promise response returns: 
 ```typescript
 interface ICollectionsData {
     data: {
@@ -34,14 +34,14 @@ interface ICollectionsData {
 ```
 | Property name | Description |
 | ------------- | ----------- |
-| id            | Id of the collection. This ID is const per collection |
+| id            | Id of the collection. This ID is constant |
 | mAuthorId     | Id of the collection received from mAuthor. This ID can be found in courses to export management on mAuthor side (in brackets)            |
-| title         | Title of the collection |
-| score         | Score received by student in the lessons |
-| errors        | Errors received by student in the lessons |
-| time          | Time spent in the lessons by student |
+| title         | The title of the collection |
+| score         | The score received by the student in the lessons |
+| errors        | Errors received by the student in the lessons |
+| time          | The time spent in the lessons by the user |
 
- * requestCollectionData(collectionId) - Get information about specific collection. Returns promise. As promise response returns: 
+ * requestCollectionData(collectionId) - Get information about specific collection. Returns promise. As the promise response returns: 
 ```typescript
 interface ICollectionData {
         type: string;
@@ -73,8 +73,8 @@ interface ICollectionData {
 
 | Property name | Description |
 | ------------- | ----------- |
-| id            | Id of the collection. This ID is const per collection |
-| mAuthorId     | Id of the collection received from mAuthor. This ID can be found in courses to export management on mAuthor side (in brackets)            |
+| id            | Id of the collection. This ID is constant |
+| mAuthorId     | Id of the collection received from mAuthor. This ID can be found in courses to export management on mAuthor side (in brackets).            |
 | lessons       | List of lessons in the course. See [Lessons description](#lesson-description) |
 | chapters      | List of chapters in the course. See [Chapters description](#chapter-description)|
  
@@ -85,13 +85,13 @@ interface ICollectionData {
 | id            | Id of the lesson. WARNING! This id may be changed (It is not const). Do not use it to match lessons! |
 | name          | Name of the lesson. |
 | type          | Type of the lesson. Available types: mauthor_lesson, mauthor_ebook, minstructor_lesson, demo_lesson, url_link, file
-| chapter       | Id of chapter where lesson is assigned. If null, lesson is without chapter |
-| icon          | Icon URL of the lesson. Warning! Icon is in format: "/file/serve/[id]" |
+| chapter       | Id of the chapter where the lesson is assigned. If null, the lesson is without any chapter |
+| icon          | Icon URL of the lesson. Warning! The icon URL is in format: "/file/serve/[id]" |
 | description   | Description of the lesson extracted from the lesson definition. |
-| definedId     | Defined ID of the lesson. This id is defined on mAuthor side in metadata definition. It's preferred way to match specific lesson. |
-| errors        | Number of errors which have been received by user. |
-| time          | How long user spent in the lesson. |
-| score         | Score which have been received by user. |
+| definedId     | The defined ID of the lesson. This id is defined on mAuthor side in a metadata definition. It's preferred way to match specific lesson. |
+| errors        | Number of errors which have been received by the user. |
+| time          | How long the user spent in the lesson. |
+| score         | The score which have been received by the user. |
 
 #### Chapter description
 
@@ -99,8 +99,8 @@ interface ICollectionData {
 | ------------- | ----------- |
 | id            | Id of the chapter. This id may be changed. |
 | parent        | Parent chapter for this chapter. If empty, chapter do not have parent. |
-| title         | Title of the chapter. |
-| description   | Description of the chapter. |
+| title         | The title of the chapter. |
+| description   | The description of the chapter. |
 
  * requestCollectionDataByURL(publisherURL, collectionURL) - Get public information about collection by collection and publisher URLs. Returns promise.
      * publisherURL - URL of the publisher defined on mCourser. Publisher URL is available in mCourser publisher panel, in publisher configuration (URL address input). 
