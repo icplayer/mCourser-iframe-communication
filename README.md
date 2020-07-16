@@ -2,7 +2,7 @@
 A simple library to simplify communication with mCourser platform.
 
 ### Installation
-In case of usage this library in a project, you can use https://www.jsdelivr.com/ It helps with providing GitHub files as CND.
+In case of usage of this library in a project, you can use https://www.jsdelivr.com/ It helps with providing GitHub files as CND.
 #### Example:
 ```HTML
 <script src="https://cdn.jsdelivr.net/gh/icplayer/mCourser-iframe-communication/index.js"></script>
@@ -16,7 +16,7 @@ Note that, this is latest version of library. It may provide compatibility issue
 
 ### Supported commands:
  * init() - initialize the communication. If the communication is not initialized it is not possible to send messages into mCourser. Returns promise. As promise response returns boolean, which tells if user is authenticated
- * destroy() - destroy initialized communication. All listeners are removed. If mCourser returns data after destroy, response is not be managed by communication. Does not have response.
+ * destroy() - destroy initialized communication. All listeners are removed. If mCourser returns data after destroy, response is not managed by communication. Does not have response.
  * updateIframeHeight(newHeight) - Set new height for embeded iframe. Does not have response.
  * requestCollectionsData() - Get all available collections for current user. Requires authenticated user. Returns a response. As the promise response returns: 
 ```typescript
@@ -37,8 +37,8 @@ interface ICollectionsData {
 | id            | Id of the collection. This ID is constant |
 | mAuthorId     | Id of the collection received from mAuthor. This ID can be found in courses to export management on mAuthor side (in brackets)            |
 | title         | The title of the collection |
-| score         | The score received by the student in the lessons |
-| errors        | Errors received by the student in the lessons |
+| score         | The score of the student in the lessons |
+| errors        | Errors of the student in the lessons |
 | time          | The time spent in the lessons by the user |
 
  * requestCollectionData(collectionId) - Get information about specific collection. Returns promise. As the promise response returns: 
