@@ -28,6 +28,8 @@ interface ICollectionsData {
         score: number;
         errors: number;
         time: number;
+        userId: number;
+        userName: string;
     }[];
     type: string;
 }
@@ -40,6 +42,8 @@ interface ICollectionsData {
 | score         | The score of the student in the lessons |
 | errors        | Errors of the student in the lessons |
 | time          | The time spent in the lessons by the user |
+| userId        | Logged in user id |
+| userName      | Logged in user name|
 
  * requestCollectionData(collectionId) - Get information about specific collection. Returns promise. As the promise response returns: 
 ```typescript
@@ -61,11 +65,13 @@ interface ICollectionData {
                 score: number;
             }[];
             chapters: {
-                id: number,
-                parent: number,
-                title: string,
-                description: string
+                id: number;
+                parent: number;
+                title: string;
+                description: string;
             }[];
+            userId: number;
+            userName: string;
         };
     }
 ```
@@ -93,7 +99,7 @@ interface ICollectionData {
 | time          | How long the user spent in the lesson. |
 | score         | The score which have been received by the user. |
 
-#### Chapter description
+#### Chapter description:
 
 | Property name | Description |
 | ------------- | ----------- |
@@ -101,6 +107,14 @@ interface ICollectionData {
 | parent        | Parent chapter for this chapter. If empty, chapter do not have parent. |
 | title         | The title of the chapter. |
 | description   | The description of the chapter. |
+
+#### User description:
+
+| Property name | Description |
+| ------------- | ----------- |
+| userId        | Logged in user id |
+| userName      | Logged in user name|
+
 
  * requestCollectionDataByURL(publisherURL, collectionURL) - Get public information about collection by collection and publisher URLs. Returns promise.
      * publisherURL - URL of the publisher defined on mCourser. Publisher URL is available in mCourser publisher panel, in publisher configuration (URL address input). 
@@ -134,10 +148,10 @@ interface IPublicCollectionData {
             definedId: string;
         }[];
         chapters: {
-            id: number,
-            parent: number,
-            title: string,
-            description: string
+            id: number;
+            parent: number;
+            title: string;
+            description: string;
         }[];
     };
 }
