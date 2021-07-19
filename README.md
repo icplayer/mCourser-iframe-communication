@@ -186,6 +186,42 @@ Because this API is available for anonymous users, there is no information about
  * requestLoginView() - Open login view in mCourser Application.
  * requestOpenLesson(lessonId) - open lesson by lesson id field. This method does not return data. Remember, lesson id may be changed for example when the course is re-imported.
 
+* requestCollectionLessonsPaginatedResults(collectionId) - Get information about specific collection lessons paginated results. Returns promise. As the promise response returns:
+```typescript
+interface ICollectionLessonsPaginatedResultsData {
+    type: CommunicationEvent.COLLECTION_LESSONS_PAGINATED_RESULTS_DATA;
+    data: {
+        id: number;
+        lessonsPaginatedResults: LessonsPaginatedResultsData[];
+    };
+}
+```
+The ILessonPaginatedResultsData interface has a following from:
+```typescript
+interface ILessonPaginatedResultsData {
+    type: CommunicationEvent.COLLECTION_LESSONS_PAGINATED_RESULTS_DATA;
+    data: {
+        lessonID: number;
+        lessonPaginatedResults: [];
+    };
+}
+```
+
+#### Collection lessons paginated results description:
+
+| Property name           | Description |
+| -------------           | ----------- |
+| id                      | Id of the collection. |
+| lessonsPaginatedResults |List of lessons with paginated results scored by the logged-in user. See [Lessons paginated resutls description](#lessons-paginated-results-description).            |
+ 
+#### Lesson paginated results description:
+
+| Property name          | Description |
+| -------------          | ----------- |
+| lessonID               | Id of the lesson.|
+| lessonPaginatedResults | List paged with results scored by the logged-in user. |
+
+
  ### Example usage:
  ```Javascript
  var communication = new MCourserCommunication();
