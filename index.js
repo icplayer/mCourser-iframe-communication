@@ -13,9 +13,11 @@ MCourserCommunication.prototype.EVENTS_MAP = {
     REQUEST_COLLECTION_DATA: 'REQUEST_COLLECTION_DATA',
     COLLECTIONS_DATA: 'COLLECTIONS_DATA',
     COLLECTION_DATA: 'COLLECTION_DATA',
+    COLLECTION_LESSONS_PAGINATED_RESULTS_DATA: 'COLLECTION_LESSONS_PAGINATED_RESULTS_DATA',
     REQUEST_CROSS_RESOURCE: 'REQUEST_CROSS_RESOURCE',
     REQUEST_LESSON: 'REQUEST_LESSON',
     REQUEST_COLLECTION_DATA_BY_URL: 'REQUEST_COLLECTION_DATA_BY_URL',
+    REQUEST_COLLECTION_LESSONS_PAGINATED_RESULTS_DATA: 'REQUEST_COLLECTION_LESSONS_PAGINATED_RESULTS_DATA',
     COLLECTION_DATA_BY_URL: 'COLLECTION_DATA_BY_URL',
     REQUEST_FIRESTORE_CUSTOM_TOKEN: 'REQUEST_FIRESTORE_CUSTOM_TOKEN',
     FIRESTORE_CUSTOM_TOKEN: 'FIRESTORE_CUSTOM_TOKEN',
@@ -80,6 +82,25 @@ MCourserCommunication.prototype.requestCollectionData = function (id) {
     this._sendEvent(this.EVENTS_MAP.REQUEST_COLLECTION_DATA, {id: id})
     return this._connectIntoEvent(this.EVENTS_MAP.COLLECTION_DATA, function (collectionData) {
         var data = collectionData.data;
+        if (!data) {
+            return false;
+        }
+
+        return data.id === id;
+    });
+};
+
+MCourserCommunication.prototype.requestCollectionLessonsPaginatedResults = function (id) {
+    if (!this.initialized) {
+        throw new Error('This communication is not initialized!');
+    }
+
+    this._sendEvent(this.EVENTS_MAP.REQUEST_COLLECTION_LESSONS_PAGINATED_RESULTS_DATA, {id: id})
+
+    return this._connectIntoEvent(this.EVENTS_MAP.COLLECTION_LESSONS_PAGINATED_RESULTS_DATA,
+        function (collectionLessonsPaginatedResults) {
+
+        let data = collectionLessonsPaginatedResults.data;
         if (!data) {
             return false;
         }
