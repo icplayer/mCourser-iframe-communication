@@ -11,8 +11,11 @@ MCourserCommunication.prototype.EVENTS_MAP = {
     REQUEST_USER_DATA: 'REQUEST_USER_DATA',
     REQUEST_COLLECTIONS_DATA: 'REQUEST_COLLECTIONS_DATA',
     REQUEST_COLLECTION_DATA: 'REQUEST_COLLECTION_DATA',
+    REQUEST_COLLECTION_CUSTOM_TOC_FIRST_VISIT_DATE_DATA: 'REQUEST_COLLECTION_CUSTOM_TOC_FIRST_VISIT_DATE_DATA',
+    POST_COLLECTION_CUSTOM_TOC_FIRST_VISIT_DATE_DATA: 'POST_COLLECTION_CUSTOM_TOC_FIRST_VISIT_DATE_DATA',
     COLLECTIONS_DATA: 'COLLECTIONS_DATA',
     COLLECTION_DATA: 'COLLECTION_DATA',
+    COLLECTION_CUSTOM_TOC_FIRST_VISIT_DATE_DATA: 'COLLECTION_CUSTOM_TOC_FIRST_VISIT_DATE_DATA',
     REQUEST_CROSS_RESOURCE: 'REQUEST_CROSS_RESOURCE',
     REQUEST_LESSON: 'REQUEST_LESSON',
     REQUEST_COLLECTION_DATA_BY_URL: 'REQUEST_COLLECTION_DATA_BY_URL',
@@ -105,6 +108,46 @@ MCourserCommunication.prototype.requestCollectionDataByURL = function (publisher
         }
 
         return data.collectionURL === collectionURL && publisherURL === publisherURL;
+    });
+};
+
+MCourserCommunication.prototype.requestCollectionCustomTOCFirstVisitDate = function (id) {
+    if (!this.initialized) {
+        throw new Error('This communication is not initialized!');
+    }
+
+    this._sendEvent(this.EVENTS_MAP.REQUEST_COLLECTION_CUSTOM_TOC_FIRST_VISIT_DATE_DATA, {id: id})
+
+    return this._connectIntoEvent(this.EVENTS_MAP.COLLECTION_CUSTOM_TOC_FIRST_VISIT_DATE_DATA,
+        function (collectionCustomTOCFirstVisitDate) {
+
+        let data = collectionCustomTOCFirstVisitDate.data;
+
+        if (!data) {
+            return false;
+        }
+
+        return data.id === id;
+    });
+};
+
+MCourserCommunication.prototype.postCollectionCustomTOCFirstVisitDate = function (id) {
+    if (!this.initialized) {
+        throw new Error('This communication is not initialized!');
+    }
+
+    this._sendEvent(this.EVENTS_MAP.POST_COLLECTION_CUSTOM_TOC_FIRST_VISIT_DATE_DATA, {id: id})
+
+    return this._connectIntoEvent(this.EVENTS_MAP.COLLECTION_CUSTOM_TOC_FIRST_VISIT_DATE_DATA,
+        function (collectionCustomTOCFirstVisitDate) {
+
+        let data = collectionCustomTOCFirstVisitDate.data;
+
+        if (!data) {
+            return false;
+        }
+
+        return data.id === id;
     });
 };
 
