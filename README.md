@@ -185,6 +185,39 @@ Because this API is available for anonymous users, there is no information about
    This method does not return data. User may not have access to selected lesson. If courseId is not set, lesson is selected relative to resourceId.
  * requestLoginView() - Open login view in mCourser Application.
  * requestOpenLesson(lessonId) - open lesson by lesson id field. This method does not return data. Remember, lesson id may be changed for example when the course is re-imported.
+ * requestCollectionCustomTOCFirstVisitDate(collectionId) - Get specific collection's custom TOC first visit date. Returns promise. As the promise response returns:
+```typescript
+interface ICollectionCustomTOCFirstVisitDate {
+    type: CommunicationEvent.COLLECTION_CUSTOM_TOC_FIRST_VISIT_DATE_DATA;
+    data: {
+        id: number;
+        collectionCustomTOCFirstVisitDate: string;
+    };
+}
+```
+#### Collection's custom TOC first visit date description:
+
+| Property name                     | Description |
+| ----------------------------------| ----------- |
+| id                                | Id of the collection. |
+| collectionCustomTOCFirstVisitDate | Date of collection's custom TOC first visit by the logged-in user. |
+
+* postCollectionCustomTOCFirstVisitDate(collectionId) - Post and return specific collection's custom TOC first visit date. Returns promise. As the promise response returns:
+```typescript
+interface ICollectionCustomTOCFirstVisitDate {
+    type: CommunicationEvent.COLLECTION_CUSTOM_TOC_FIRST_VISIT_DATE_DATA;
+    data: {
+        id: number;
+        collectionCustomTOCFirstVisitDate: string;
+    };
+}
+```
+#### Collection's custom TOC first visit date description:
+
+| Property name                     | Description |
+| ----------------------------------| ----------- |
+| id                                | Id of the collection. |
+| collectionCustomTOCFirstVisitDate | Date of collection's custom TOC first visit by the logged-in user. |
 
 * requestCollectionLessonsPaginatedResults(collectionId) - Get information about specific collection lessons paginated results. Returns promise. As the promise response returns:
 ```typescript
