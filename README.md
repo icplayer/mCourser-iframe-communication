@@ -219,6 +219,42 @@ interface ICollectionCustomTOCFirstVisitDate {
 | id                                | Id of the collection. |
 | collectionCustomTOCFirstVisitDate | Date of collection's custom TOC first visit by the logged-in user. |
 
+* requestCollectionLessonsPaginatedResults(collectionId) - Get information about specific collection lessons paginated results. Returns promise. As the promise response returns:
+```typescript
+interface ICollectionLessonsPaginatedResultsData {
+    type: CommunicationEvent.COLLECTION_LESSONS_PAGINATED_RESULTS_DATA;
+    data: {
+        id: number;
+        lessonsPaginatedResults: LessonsPaginatedResultsData[];
+    };
+}
+```
+The ILessonPaginatedResultsData interface has a following from:
+```typescript
+interface ILessonPaginatedResultsData {
+    type: CommunicationEvent.COLLECTION_LESSONS_PAGINATED_RESULTS_DATA;
+    data: {
+        lessonID: number;
+        lessonPaginatedResults: [];
+    };
+}
+```
+
+#### Collection lessons paginated results description:
+
+| Property name           | Description |
+| -------------           | ----------- |
+| id                      | Id of the collection. |
+| lessonsPaginatedResults |List of lessons with paginated results scored by the logged-in user. See [Lessons paginated resutls description](#lessons-paginated-results-description).            |
+ 
+#### Lesson paginated results description:
+
+| Property name          | Description |
+| -------------          | ----------- |
+| lessonID               | Id of the lesson.|
+| lessonPaginatedResults | List paged with results scored by the logged-in user. |
+
+
  ### Example usage:
  ```Javascript
  var communication = new MCourserCommunication();
