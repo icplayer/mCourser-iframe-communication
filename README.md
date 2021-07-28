@@ -212,12 +212,40 @@ interface ICollectionCustomTOCFirstVisitDate {
     };
 }
 ```
-#### Collection's custom TOC first visit date description:
+* requestCollectionCustomTOCState(collectionId) - Get specific collection's custom TOC state. Returns promise. As the promise response returns:
+```typescript
+interface ICollectionCustomTOCState {
+    type: CommunicationEvent.COLLECTION_CUSTOM_TOC_STATE_DATA;
+    data: {
+        id: number;
+        collectionCustomTOCState: string;
+    };
+}
+```
+#### Collection's custom TOC state description:
 
 | Property name                     | Description |
 | ----------------------------------| ----------- |
 | id                                | Id of the collection. |
-| collectionCustomTOCFirstVisitDate | Date of collection's custom TOC first visit by the logged-in user. |
+| collectionCustomTOCState          | State of collection's custom TOC associated with the logged-in user. |
+
+* postCollectionCustomTOCState(collectionId) - Post and return specific collection's custom TOC state. Returns promise. As the promise response returns:
+```typescript
+interface ICollectionCustomTOCState {
+    type: CommunicationEvent.COLLECTION_CUSTOM_TOC_STATE_DATA;
+    data: {
+        id: number;
+        collectionCustomTOCState: string;
+    };
+}
+```
+
+#### Collection's custom TOC state description:
+
+| Property name                     | Description |
+| ----------------------------------| ----------- |
+| id                                | Id of the collection. |
+| collectionCustomTOCState          | State of collection's custom TOC associated with the logged-in user. |
 
 * requestCollectionLessonsPaginatedResults(collectionId) - Get information about specific collection lessons paginated results. Returns promise. As the promise response returns:
 ```typescript
