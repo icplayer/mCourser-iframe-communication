@@ -10,10 +10,12 @@ MCourserCommunication.prototype.EVENTS_MAP = {
     HANDSHAKE: 'HANDSHAKE',
     REQUEST_USER_DATA: 'REQUEST_USER_DATA',
     REQUEST_COLLECTIONS_DATA: 'REQUEST_COLLECTIONS_DATA',
+    REQUEST_COLLECTION_ID: 'REQUEST_COLLECTION_ID',
     REQUEST_COLLECTION_DATA: 'REQUEST_COLLECTION_DATA',
     REQUEST_COLLECTION_CUSTOM_TOC_FIRST_VISIT_DATE_DATA: 'REQUEST_COLLECTION_CUSTOM_TOC_FIRST_VISIT_DATE_DATA',
     POST_COLLECTION_CUSTOM_TOC_FIRST_VISIT_DATE_DATA: 'POST_COLLECTION_CUSTOM_TOC_FIRST_VISIT_DATE_DATA',
     COLLECTIONS_DATA: 'COLLECTIONS_DATA',
+    COLLECTION_ID: 'COLLECTION_ID',
     COLLECTION_DATA: 'COLLECTION_DATA',
     COLLECTION_CUSTOM_TOC_FIRST_VISIT_DATE_DATA: 'COLLECTION_CUSTOM_TOC_FIRST_VISIT_DATE_DATA',
     COLLECTION_LESSONS_PAGINATED_RESULTS_DATA: 'COLLECTION_LESSONS_PAGINATED_RESULTS_DATA',
@@ -75,6 +77,15 @@ MCourserCommunication.prototype.requestCollectionsData = function () {
 
     this._sendEvent(this.EVENTS_MAP.REQUEST_COLLECTIONS_DATA, {});
     return this._connectIntoEvent(this.EVENTS_MAP.COLLECTIONS_DATA)
+};
+
+MCourserCommunication.prototype.requestCollectionId = function () {
+    if (!this.initialized) {
+        throw new Error('This communication is not initialized!');
+    }
+
+    this._sendEvent(this.EVENTS_MAP.REQUEST_COLLECTION_ID, {})
+    return this._connectIntoEvent(this.EVENTS_MAP.COLLECTION_ID)
 };
 
 MCourserCommunication.prototype.requestCollectionData = function (id) {
