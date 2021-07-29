@@ -45,6 +45,22 @@ interface ICollectionsData {
 | userId        | Logged in user id |
 | userName      | Logged in user name|
 
+ * requestCollectionId() - Get collection ID associated with specific custom TOC. Returns promise. As the promise response returns: 
+```typescript
+interface ICollectionId {
+    data: {
+        collectionId: number;
+    };
+    type: CommunicationEvent.COLLECTION_ID;
+}
+```
+
+#### Collection's ID description:
+
+| Property name                     | Description |
+| ----------------------------------| ----------- |
+| collectionId                      | Id of the collection associated with specific custom TOC. |
+
  * requestCollectionData(collectionId) - Get information about specific collection. Returns promise. As the promise response returns: 
 ```typescript
 interface ICollectionData {
