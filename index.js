@@ -14,10 +14,13 @@ MCourserCommunication.prototype.EVENTS_MAP = {
     REQUEST_COLLECTION_DATA: 'REQUEST_COLLECTION_DATA',
     REQUEST_COLLECTION_CUSTOM_TOC_FIRST_VISIT_DATE_DATA: 'REQUEST_COLLECTION_CUSTOM_TOC_FIRST_VISIT_DATE_DATA',
     POST_COLLECTION_CUSTOM_TOC_FIRST_VISIT_DATE_DATA: 'POST_COLLECTION_CUSTOM_TOC_FIRST_VISIT_DATE_DATA',
+    REQUEST_COLLECTION_CUSTOM_TOC_STATE_DATA: 'REQUEST_COLLECTION_CUSTOM_TOC_STATE_DATA',
+    POST_COLLECTION_CUSTOM_TOC_STATE_DATA: 'POST_COLLECTION_CUSTOM_TOC_STATE_DATA',
     COLLECTIONS_DATA: 'COLLECTIONS_DATA',
     COLLECTION_ID: 'COLLECTION_ID',
     COLLECTION_DATA: 'COLLECTION_DATA',
     COLLECTION_CUSTOM_TOC_FIRST_VISIT_DATE_DATA: 'COLLECTION_CUSTOM_TOC_FIRST_VISIT_DATE_DATA',
+    COLLECTION_CUSTOM_TOC_STATE_DATA: 'COLLECTION_CUSTOM_TOC_STATE_DATA',
     COLLECTION_LESSONS_PAGINATED_RESULTS_DATA: 'COLLECTION_LESSONS_PAGINATED_RESULTS_DATA',
     REQUEST_CROSS_RESOURCE: 'REQUEST_CROSS_RESOURCE',
     REQUEST_LESSON: 'REQUEST_LESSON',
@@ -174,6 +177,46 @@ MCourserCommunication.prototype.postCollectionCustomTOCFirstVisitDate = function
         function (collectionCustomTOCFirstVisitDate) {
 
         let data = collectionCustomTOCFirstVisitDate.data;
+
+        if (!data) {
+            return false;
+        }
+
+        return data.id === id;
+    });
+};
+
+MCourserCommunication.prototype.requestCollectionCustomTOCState = function (id, state) {
+    if (!this.initialized) {
+        throw new Error('This communication is not initialized!');
+    }
+
+    this._sendEvent(this.EVENTS_MAP.REQUEST_COLLECTION_CUSTOM_TOC_STATE_DATA, {id: id, state: state})
+
+    return this._connectIntoEvent(this.EVENTS_MAP.COLLECTION_CUSTOM_TOC_STATE_DATA,
+        function (collectionCustomTOCState) {
+
+        let data = collectionCustomTOCState.data;
+
+        if (!data) {
+            return false;
+        }
+
+        return data.id === id;
+    });
+};
+
+MCourserCommunication.prototype.postCollectionCustomTOCState = function (id, state) {
+    if (!this.initialized) {
+        throw new Error('This communication is not initialized!');
+    }
+
+    this._sendEvent(this.EVENTS_MAP.POST_COLLECTION_CUSTOM_TOC_STATE_DATA, {id: id, state: state})
+
+    return this._connectIntoEvent(this.EVENTS_MAP.COLLECTION_CUSTOM_TOC_STATE_DATA,
+        function (collectionCustomTOCState) {
+
+        let data = collectionCustomTOCState.data;
 
         if (!data) {
             return false;
