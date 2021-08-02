@@ -77,6 +77,7 @@ interface ICollectionData {
                 description: string;
                 definedId: string;
                 errors: number;
+                extented_metadata: [];
                 time: number;
                 score: number;
             }[];
@@ -102,18 +103,19 @@ interface ICollectionData {
  
 #### Lesson description:
 
-| Property name | Description |
-| ------------- | ----------- |
-| id            | Id of the lesson. WARNING! This id may be changed (It is not const). Do not use it to match lessons! |
-| name          | Name of the lesson. |
-| type          | Type of the lesson. Available types: mauthor_lesson, mauthor_ebook, minstructor_lesson, demo_lesson, url_link, file
-| chapter       | Id of the chapter where the lesson is assigned. If null, the lesson is without any chapter |
-| icon          | Icon URL of the lesson. Warning! The icon URL is in format: "/file/serve/[id]" |
-| description   | Description of the lesson extracted from the lesson definition. |
-| definedId     | The defined ID of the lesson. This id is defined on mAuthor side in a metadata definition. It's preferred way to match specific lesson. |
-| errors        | Number of errors which have been received by the user. |
-| time          | How long the user spent in the lesson. |
-| score         | The score which have been received by the user. |
+| Property name      | Description |
+| -------------------| ----------- |
+| id                 | Id of the lesson. WARNING! This id may be changed (It is not const). Do not use it to match lessons! |
+| name               | Name of the lesson. |
+| type               | Type of the lesson. Available types: mauthor_lesson, mauthor_ebook, minstructor_lesson, demo_lesson, url_link, file
+| chapter            | Id of the chapter where the lesson is assigned. If null, the lesson is without any chapter |
+| icon               | Icon URL of the lesson. Warning! The icon URL is in format: "/file/serve/[id]" |
+| description        | Description of the lesson extracted from the lesson definition. |
+| definedId          | The defined ID of the lesson. This id is defined on mAuthor side in a metadata definition. It's preferred way to match specific lesson. |
+| errors             | Number of errors which have been received by the user. |
+| extended_metadata  | Lesson's metadata containing i.e. lesson_category. |
+| time               | How long the user spent in the lesson. |
+| score              | The score which have been received by the user. |
 
 #### Chapter description:
 
