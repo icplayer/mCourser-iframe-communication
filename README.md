@@ -78,7 +78,7 @@ interface ICollectionData {
                 definedId: string;
                 errors: number;
                 extented_metadata: [];
-                tags: [];
+                tags: string;
                 time: number;
                 score: number;
             }[];
@@ -115,7 +115,7 @@ interface ICollectionData {
 | definedId          | The defined ID of the lesson. This id is defined on mAuthor side in a metadata definition. It's preferred way to match specific lesson. |
 | errors             | Number of errors which have been received by the user. |
 | extended_metadata  | Lesson's metadata containing i.e. lesson_category. |
-| tags               | Tags associated with specific lesson, i.e. school_grade, subject |
+| tags               | String with comma separated tags associated with specific lesson, i.e. school_grade, subject |
 | time               | How long the user spent in the lesson. |
 | score              | The score which have been received by the user. |
 
