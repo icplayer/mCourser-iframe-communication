@@ -140,7 +140,7 @@ interface ICollectionData {
      * publisherURL - URL of the publisher defined on mCourser. Publisher URL is available in mCourser publisher panel, in publisher configuration (URL address input). 
      * collectionURL - URL of the collection. This address is available in collections management. In specific course management there is available adress URL input.
      
- As promise reponses:
+ As promise responses:
 ```typescript
 interface IPublicCollectionData {
     type: string;
@@ -192,6 +192,43 @@ Because this API is available for anonymous users, there is no information about
 | screenShotsDescription    | Description of the screenshots added to the course |
 | lessons                   | List of lessons. Most of properties match [Lesson description](#lesson-description). |
 | chapters                  | See [Chapters description](#chapter-description) for chapters dict information |
+ 
+ * requestCollectionExternalResources() - get external resources associated with specific collection. Returns promise. As the promise response returns:
+```typescript
+interface ICollectionExternalResources {
+    type: CommunicationEvent.COLLECTION_EXTERNAL_RESOURCES;
+    data: {
+        courseId: number;
+        externalResources: {
+            course: number;
+            course_external_id: string;
+            cover: string;
+            external_id: string;
+            label: string;
+            url: string;
+        }[] | [];
+    };
+}
+```
+
+#### Collection's external resources description:
+
+| Property name     | Description |
+| ------------------| ----------- |
+| courseId          | Id of the collection. |
+| externalResources | External resources associated with specific collection. See [External resource](#external-resource-description). |
+
+
+#### External resource description:
+
+| Property name      | Description |
+| -------------------| ----------- |
+| course             | Id of the collection. |
+| course_external_id | External id of the course.  |
+| cover              | External resource's cover (in form of an URL). |
+| external_id        | External resource's external id. |
+| label              | External resource's label. |
+| url                | External resource's URL. |
 
  * requestCrossResource(resourceId, definedId, mAuthorCourseId, pageId, lessonType) - Open new lesson from different or the same course. 
    * Resource id is any lesson id in selected publisher. It means that you need to retrieve at least one lesson from the API in case of cross lesson request.
