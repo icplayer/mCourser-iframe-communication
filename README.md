@@ -269,6 +269,39 @@ interface ICollectionCustomTOCFirstVisitDate {
     };
 }
 ```
+
+ * requestCollectionCustomTOCAndAnyLessonLastVisitsDates(collectionId) - Get specific collection's custom TOC and specific collection's any lesson last visits dates. Returns promise. As the promise response returns:
+```typescript
+interface ICollectionCustomTOCAndAnyLessonLastVisitsDates {
+    type: CommunicationEvent.COLLECTION_CUSTOM_TOC_AND_ANY_LESSON_LAST_VISITS_DATES_DATA;
+    data: {
+        id: number;
+        collectionCustomTOCLastVisitDate: string;
+        collectionAnyLessonLastVisitDate: string;
+    };
+}
+```
+#### Collection's custom TOC and any lesson last visits dates description:
+
+| Property name                     | Description |
+| --------------------------------- | ----------- |
+| id                                | Id of the collection. |
+| collectionCustomTOCLastVisitDate  | Date of collection's custom TOC last visit by the logged-in user. |
+| collectionAnyLessonLastVisitDate  | Date of collection's any lesson last visit by the logged-in user. |
+
+ * postCollectionCustomTOCLastVisitDate(collectionId) - Post specific collection's custom TOC and return specific collection's custom TOC and any lesson last visits dates. Returns promise. As the promise response returns:
+```typescript
+interface ICollectionCustomTOCAndAnyLessonLastVisitsDates {
+    type: CommunicationEvent.COLLECTION_CUSTOM_TOC_AND_ANY_LESSON_LAST_VISITS_DATES_DATA;
+    data: {
+        id: number;
+        collectionCustomTOCLastVisitDate: string;
+        collectionAnyLessonLastVisitDate: string;
+    };
+}
+```
+For parameters description see [Collection's custom TOC and any lesson last visits dates description](#Collection's custom TOC and any lesson last visits dates description:).
+
 * requestCollectionCustomTOCState(collectionId) - Get specific collection's custom TOC state. Returns promise. As the promise response returns:
 ```typescript
 interface ICollectionCustomTOCState {
