@@ -343,18 +343,15 @@ interface ICollectionLessonsPaginatedResultsData {
     type: CommunicationEvent.COLLECTION_LESSONS_PAGINATED_RESULTS_DATA;
     data: {
         id: number;
-        lessonsPaginatedResults: LessonsPaginatedResultsData[];
+        lessonsPaginatedResults: ILessonPaginatedResultsData[];
     };
 }
 ```
 The ILessonPaginatedResultsData interface has a following from:
 ```typescript
 interface ILessonPaginatedResultsData {
-    type: CommunicationEvent.COLLECTION_LESSONS_PAGINATED_RESULTS_DATA;
-    data: {
-        lessonID: number;
-        lessonPaginatedResults: [];
-    };
+    lessonID: number;
+    lessonPaginatedResults: PageScore[];
 }
 ```
 
@@ -363,7 +360,7 @@ interface ILessonPaginatedResultsData {
 | Property name           | Description |
 | -------------           | ----------- |
 | id                      | Id of the collection. |
-| lessonsPaginatedResults |List of lessons with paginated results scored by the logged-in user. See [Lessons paginated resutls description](#lessons-paginated-results-description).            |
+| lessonsPaginatedResults | List of lessons with paginated results scored by the logged-in user. See [Lessons paginated resutls description](#lessons-paginated-results-description). |
  
 #### Lesson paginated results description:
 
