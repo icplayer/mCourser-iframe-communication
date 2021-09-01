@@ -131,7 +131,7 @@ MCourserCommunication.prototype.requestCollectionLessonsPaginatedResults = funct
     return this._connectIntoEvent(this.EVENTS_MAP.COLLECTION_LESSONS_PAGINATED_RESULTS_DATA,
         function (collectionLessonsPaginatedResults) {
 
-        let data = collectionLessonsPaginatedResults.data;
+        var data = collectionLessonsPaginatedResults.data;
         if (!data) {
             return false;
         }
@@ -170,7 +170,7 @@ MCourserCommunication.prototype.requestCollectionCustomTOCFirstVisitDate = funct
     return this._connectIntoEvent(this.EVENTS_MAP.COLLECTION_CUSTOM_TOC_FIRST_VISIT_DATE_DATA,
         function (collectionCustomTOCFirstVisitDate) {
 
-        let data = collectionCustomTOCFirstVisitDate.data;
+        var data = collectionCustomTOCFirstVisitDate.data;
 
         if (!data) {
             return false;
@@ -190,7 +190,7 @@ MCourserCommunication.prototype.postCollectionCustomTOCFirstVisitDate = function
     return this._connectIntoEvent(this.EVENTS_MAP.COLLECTION_CUSTOM_TOC_FIRST_VISIT_DATE_DATA,
         function (collectionCustomTOCFirstVisitDate) {
 
-        let data = collectionCustomTOCFirstVisitDate.data;
+        var data = collectionCustomTOCFirstVisitDate.data;
 
         if (!data) {
             return false;
@@ -210,7 +210,7 @@ MCourserCommunication.prototype.requestCollectionCustomTOCAndAnyLessonLastVisits
     return this._connectIntoEvent(this.EVENTS_MAP.COLLECTION_CUSTOM_TOC_AND_ANY_LESSON_LAST_VISITS_DATES_DATA,
         function (collectionCustomTOCAndAnyLessonLastVisitsDates) {
 
-        let data = collectionCustomTOCAndAnyLessonLastVisitsDates.data;
+        var data = collectionCustomTOCAndAnyLessonLastVisitsDates.data;
 
         if (!data) {
             return false;
@@ -230,7 +230,7 @@ MCourserCommunication.prototype.postCollectionCustomTOCLastVisitDate = function 
     return this._connectIntoEvent(this.EVENTS_MAP.COLLECTION_CUSTOM_TOC_AND_ANY_LESSON_LAST_VISITS_DATES_DATA,
         function (collectionCustomTOCAndAnyLessonLastVisitsDates) {
 
-        let data = collectionCustomTOCAndAnyLessonLastVisitsDates.data;
+        var data = collectionCustomTOCAndAnyLessonLastVisitsDates.data;
 
         if (!data) {
             return false;
@@ -250,7 +250,7 @@ MCourserCommunication.prototype.requestCollectionCustomTOCState = function (id, 
     return this._connectIntoEvent(this.EVENTS_MAP.COLLECTION_CUSTOM_TOC_STATE_DATA,
         function (collectionCustomTOCState) {
 
-        let data = collectionCustomTOCState.data;
+        var data = collectionCustomTOCState.data;
 
         if (!data) {
             return false;
@@ -270,7 +270,7 @@ MCourserCommunication.prototype.postCollectionCustomTOCState = function (id, sta
     return this._connectIntoEvent(this.EVENTS_MAP.COLLECTION_CUSTOM_TOC_STATE_DATA,
         function (collectionCustomTOCState) {
 
-        let data = collectionCustomTOCState.data;
+        var data = collectionCustomTOCState.data;
 
         if (!data) {
             return false;

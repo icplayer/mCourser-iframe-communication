@@ -48,10 +48,10 @@ interface ICollectionsData {
  * requestCollectionId() - Get collection ID associated with specific custom TOC. Returns promise. As the promise response returns: 
 ```typescript
 interface ICollectionId {
+    type: CommunicationEvent.COLLECTION_ID;
     data: {
         collectionId: number;
     };
-    type: CommunicationEvent.COLLECTION_ID;
 }
 ```
 
