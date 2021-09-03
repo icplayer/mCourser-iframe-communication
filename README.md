@@ -337,7 +337,28 @@ interface ICollectionCustomTOCState {
 | id                                | Id of the collection. |
 | collectionCustomTOCState          | State of collection's custom TOC associated with the logged-in user. |
 
-* requestCollectionLessonsPaginatedResults(collectionId) - Get information about specific collection lessons paginated results. Returns promise. As the promise response returns:
+* requestCollectionCodeActionAndMarketData(collectionId) - Get information about specific collection's code action and market (publisher). These parameters are obtained from P3 data-stream. As the promise response returns:
+```typescript
+interface ICollectionCodeActionAndMarket {
+    type: CommunicationEvent.COLLECTION_CODE_ACTION_AND_MARKET;
+    data: {
+        id: number;
+        collectionCodeAction: string[];
+        collectionMarket: string;
+    };
+}
+```
+
+#### Collection's code action and market description:
+
+| Property name           | Description |
+| -------------           | ----------- |
+| id                      | Id of the collection. |
+| collectionCodeAction    | List of collection's code actions obtained from P3 data-stream. |
+| collectionMarket        | Collection's market (publisher) obtained from P3 data-stream.  |
+ 
+
+* requestCollectionLessonsPaginatedResults(collectionId) - Get information about specific collection's lessons' paginated results. Returns promise. As the promise response returns:
 ```typescript
 interface ICollectionLessonsPaginatedResultsData {
     type: CommunicationEvent.COLLECTION_LESSONS_PAGINATED_RESULTS_DATA;
@@ -355,19 +376,19 @@ interface ILessonPaginatedResultsData {
 }
 ```
 
-#### Collection lessons paginated results description:
+#### Collection's lessons' paginated results description:
 
 | Property name           | Description |
 | -------------           | ----------- |
 | id                      | Id of the collection. |
 | lessonsPaginatedResults | List of lessons with paginated results scored by the logged-in user. See [Lessons paginated resutls description](#lessons-paginated-results-description). |
  
-#### Lesson paginated results description:
+#### Lesson's paginated results description:
 
 | Property name          | Description |
 | -------------          | ----------- |
 | lessonID               | Id of the lesson.|
-| lessonPaginatedResults | List paged with results scored by the logged-in user. |
+| lessonPaginatedResults | List of lesson's pages with results scored by the logged-in user. |
 
 
  ### Example usage:
