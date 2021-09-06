@@ -10,12 +10,27 @@ MCourserCommunication.prototype.EVENTS_MAP = {
     HANDSHAKE: 'HANDSHAKE',
     REQUEST_USER_DATA: 'REQUEST_USER_DATA',
     REQUEST_COLLECTIONS_DATA: 'REQUEST_COLLECTIONS_DATA',
+    REQUEST_COLLECTION_ID: 'REQUEST_COLLECTION_ID',
     REQUEST_COLLECTION_DATA: 'REQUEST_COLLECTION_DATA',
+    REQUEST_COLLECTION_EXTERNAL_RESOURCES: 'REQUEST_COLLECTION_EXTERNAL_RESOURCES',
+    REQUEST_COLLECTION_CUSTOM_TOC_FIRST_VISIT_DATE_DATA: 'REQUEST_COLLECTION_CUSTOM_TOC_FIRST_VISIT_DATE_DATA',
+    POST_COLLECTION_CUSTOM_TOC_FIRST_VISIT_DATE_DATA: 'POST_COLLECTION_CUSTOM_TOC_FIRST_VISIT_DATE_DATA',
+    REQUEST_COLLECTION_CUSTOM_TOC_AND_ANY_LESSON_LAST_VISITS_DATES_DATA: 'REQUEST_COLLECTION_CUSTOM_TOC_AND_ANY_LESSON_LAST_VISITS_DATES_DATA',
+    POST_COLLECTION_CUSTOM_TOC_LAST_VISIT_DATE_DATA: 'POST_COLLECTION_CUSTOM_TOC_LAST_VISIT_DATE_DATA',
+    REQUEST_COLLECTION_CUSTOM_TOC_STATE_DATA: 'REQUEST_COLLECTION_CUSTOM_TOC_STATE_DATA',
+    POST_COLLECTION_CUSTOM_TOC_STATE_DATA: 'POST_COLLECTION_CUSTOM_TOC_STATE_DATA',
     COLLECTIONS_DATA: 'COLLECTIONS_DATA',
+    COLLECTION_ID: 'COLLECTION_ID',
     COLLECTION_DATA: 'COLLECTION_DATA',
+    COLLECTION_EXTERNAL_RESOURCES: 'COLLECTION_EXTERNAL_RESOURCES',
+    COLLECTION_CUSTOM_TOC_FIRST_VISIT_DATE_DATA: 'COLLECTION_CUSTOM_TOC_FIRST_VISIT_DATE_DATA',
+    COLLECTION_CUSTOM_TOC_AND_ANY_LESSON_LAST_VISITS_DATES_DATA: 'COLLECTION_CUSTOM_TOC_AND_ANY_LESSON_LAST_VISITS_DATES_DATA',
+    COLLECTION_CUSTOM_TOC_STATE_DATA: 'COLLECTION_CUSTOM_TOC_STATE_DATA',
+    COLLECTION_LESSONS_PAGINATED_RESULTS_DATA: 'COLLECTION_LESSONS_PAGINATED_RESULTS_DATA',
     REQUEST_CROSS_RESOURCE: 'REQUEST_CROSS_RESOURCE',
     REQUEST_LESSON: 'REQUEST_LESSON',
     REQUEST_COLLECTION_DATA_BY_URL: 'REQUEST_COLLECTION_DATA_BY_URL',
+    REQUEST_COLLECTION_LESSONS_PAGINATED_RESULTS_DATA: 'REQUEST_COLLECTION_LESSONS_PAGINATED_RESULTS_DATA',
     COLLECTION_DATA_BY_URL: 'COLLECTION_DATA_BY_URL',
     REQUEST_FIRESTORE_CUSTOM_TOKEN: 'REQUEST_FIRESTORE_CUSTOM_TOKEN',
     FIRESTORE_CUSTOM_TOKEN: 'FIRESTORE_CUSTOM_TOKEN',
@@ -72,6 +87,15 @@ MCourserCommunication.prototype.requestCollectionsData = function () {
     return this._connectIntoEvent(this.EVENTS_MAP.COLLECTIONS_DATA)
 };
 
+MCourserCommunication.prototype.requestCollectionId = function () {
+    if (!this.initialized) {
+        throw new Error('This communication is not initialized!');
+    }
+
+    this._sendEvent(this.EVENTS_MAP.REQUEST_COLLECTION_ID, {})
+    return this._connectIntoEvent(this.EVENTS_MAP.COLLECTION_ID)
+};
+
 MCourserCommunication.prototype.requestCollectionData = function (id) {
     if (!this.initialized) {
         throw new Error('This communication is not initialized!');
@@ -80,6 +104,34 @@ MCourserCommunication.prototype.requestCollectionData = function (id) {
     this._sendEvent(this.EVENTS_MAP.REQUEST_COLLECTION_DATA, {id: id})
     return this._connectIntoEvent(this.EVENTS_MAP.COLLECTION_DATA, function (collectionData) {
         var data = collectionData.data;
+        if (!data) {
+            return false;
+        }
+
+        return data.id === id;
+    });
+};
+
+MCourserCommunication.prototype.requestCollectionExternalResources = function () {
+    if (!this.initialized) {
+        throw new Error('This communication is not initialized!');
+    }
+
+    this._sendEvent(this.EVENTS_MAP.REQUEST_COLLECTION_EXTERNAL_RESOURCES, {})
+    return this._connectIntoEvent(this.EVENTS_MAP.COLLECTION_EXTERNAL_RESOURCES)
+};
+
+MCourserCommunication.prototype.requestCollectionLessonsPaginatedResults = function (id) {
+    if (!this.initialized) {
+        throw new Error('This communication is not initialized!');
+    }
+
+    this._sendEvent(this.EVENTS_MAP.REQUEST_COLLECTION_LESSONS_PAGINATED_RESULTS_DATA, {id: id})
+
+    return this._connectIntoEvent(this.EVENTS_MAP.COLLECTION_LESSONS_PAGINATED_RESULTS_DATA,
+        function (collectionLessonsPaginatedResults) {
+
+        var data = collectionLessonsPaginatedResults.data;
         if (!data) {
             return false;
         }
@@ -105,6 +157,126 @@ MCourserCommunication.prototype.requestCollectionDataByURL = function (publisher
         }
 
         return data.collectionURL === collectionURL && publisherURL === publisherURL;
+    });
+};
+
+MCourserCommunication.prototype.requestCollectionCustomTOCFirstVisitDate = function (id) {
+    if (!this.initialized) {
+        throw new Error('This communication is not initialized!');
+    }
+
+    this._sendEvent(this.EVENTS_MAP.REQUEST_COLLECTION_CUSTOM_TOC_FIRST_VISIT_DATE_DATA, {id: id})
+
+    return this._connectIntoEvent(this.EVENTS_MAP.COLLECTION_CUSTOM_TOC_FIRST_VISIT_DATE_DATA,
+        function (collectionCustomTOCFirstVisitDate) {
+
+        var data = collectionCustomTOCFirstVisitDate.data;
+
+        if (!data) {
+            return false;
+        }
+
+        return data.id === id;
+    });
+};
+
+MCourserCommunication.prototype.postCollectionCustomTOCFirstVisitDate = function (id) {
+    if (!this.initialized) {
+        throw new Error('This communication is not initialized!');
+    }
+
+    this._sendEvent(this.EVENTS_MAP.POST_COLLECTION_CUSTOM_TOC_FIRST_VISIT_DATE_DATA, {id: id})
+
+    return this._connectIntoEvent(this.EVENTS_MAP.COLLECTION_CUSTOM_TOC_FIRST_VISIT_DATE_DATA,
+        function (collectionCustomTOCFirstVisitDate) {
+
+        var data = collectionCustomTOCFirstVisitDate.data;
+
+        if (!data) {
+            return false;
+        }
+
+        return data.id === id;
+    });
+};
+
+MCourserCommunication.prototype.requestCollectionCustomTOCAndAnyLessonLastVisitsDates = function (id) {
+    if (!this.initialized) {
+        throw new Error('This communication is not initialized!');
+    }
+
+    this._sendEvent(this.EVENTS_MAP.REQUEST_COLLECTION_CUSTOM_TOC_AND_ANY_LESSON_LAST_VISITS_DATES_DATA, {id: id})
+
+    return this._connectIntoEvent(this.EVENTS_MAP.COLLECTION_CUSTOM_TOC_AND_ANY_LESSON_LAST_VISITS_DATES_DATA,
+        function (collectionCustomTOCAndAnyLessonLastVisitsDates) {
+
+        var data = collectionCustomTOCAndAnyLessonLastVisitsDates.data;
+
+        if (!data) {
+            return false;
+        }
+
+        return data.id === id;
+    });
+};
+
+MCourserCommunication.prototype.postCollectionCustomTOCLastVisitDate = function (id) {
+    if (!this.initialized) {
+        throw new Error('This communication is not initialized!');
+    }
+
+    this._sendEvent(this.EVENTS_MAP.POST_COLLECTION_CUSTOM_TOC_LAST_VISIT_DATE_DATA, {id: id})
+
+    return this._connectIntoEvent(this.EVENTS_MAP.COLLECTION_CUSTOM_TOC_AND_ANY_LESSON_LAST_VISITS_DATES_DATA,
+        function (collectionCustomTOCAndAnyLessonLastVisitsDates) {
+
+        var data = collectionCustomTOCAndAnyLessonLastVisitsDates.data;
+
+        if (!data) {
+            return false;
+        }
+
+        return data.id === id;
+    });
+};
+
+MCourserCommunication.prototype.requestCollectionCustomTOCState = function (id, state) {
+    if (!this.initialized) {
+        throw new Error('This communication is not initialized!');
+    }
+
+    this._sendEvent(this.EVENTS_MAP.REQUEST_COLLECTION_CUSTOM_TOC_STATE_DATA, {id: id, state: state})
+
+    return this._connectIntoEvent(this.EVENTS_MAP.COLLECTION_CUSTOM_TOC_STATE_DATA,
+        function (collectionCustomTOCState) {
+
+        var data = collectionCustomTOCState.data;
+
+        if (!data) {
+            return false;
+        }
+
+        return data.id === id;
+    });
+};
+
+MCourserCommunication.prototype.postCollectionCustomTOCState = function (id, state) {
+    if (!this.initialized) {
+        throw new Error('This communication is not initialized!');
+    }
+
+    this._sendEvent(this.EVENTS_MAP.POST_COLLECTION_CUSTOM_TOC_STATE_DATA, {id: id, state: state})
+
+    return this._connectIntoEvent(this.EVENTS_MAP.COLLECTION_CUSTOM_TOC_STATE_DATA,
+        function (collectionCustomTOCState) {
+
+        var data = collectionCustomTOCState.data;
+
+        if (!data) {
+            return false;
+        }
+
+        return data.id === id;
     });
 };
 
