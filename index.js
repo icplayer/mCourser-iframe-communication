@@ -19,6 +19,7 @@ MCourserCommunication.prototype.EVENTS_MAP = {
     POST_COLLECTION_CUSTOM_TOC_LAST_VISIT_DATE_DATA: 'POST_COLLECTION_CUSTOM_TOC_LAST_VISIT_DATE_DATA',
     REQUEST_COLLECTION_CUSTOM_TOC_STATE_DATA: 'REQUEST_COLLECTION_CUSTOM_TOC_STATE_DATA',
     POST_COLLECTION_CUSTOM_TOC_STATE_DATA: 'POST_COLLECTION_CUSTOM_TOC_STATE_DATA',
+    REQUEST_COLLECTION_CODE_ACTION_AND_MARKET: 'REQUEST_COLLECTION_CODE_ACTION_AND_MARKET',
     COLLECTIONS_DATA: 'COLLECTIONS_DATA',
     COLLECTION_ID: 'COLLECTION_ID',
     COLLECTION_DATA: 'COLLECTION_DATA',
@@ -26,6 +27,7 @@ MCourserCommunication.prototype.EVENTS_MAP = {
     COLLECTION_CUSTOM_TOC_FIRST_VISIT_DATE_DATA: 'COLLECTION_CUSTOM_TOC_FIRST_VISIT_DATE_DATA',
     COLLECTION_CUSTOM_TOC_AND_ANY_LESSON_LAST_VISITS_DATES_DATA: 'COLLECTION_CUSTOM_TOC_AND_ANY_LESSON_LAST_VISITS_DATES_DATA',
     COLLECTION_CUSTOM_TOC_STATE_DATA: 'COLLECTION_CUSTOM_TOC_STATE_DATA',
+    COLLECTION_CODE_ACTION_AND_MARKET: 'COLLECTION_CODE_ACTION_AND_MARKET',
     COLLECTION_LESSONS_PAGINATED_RESULTS_DATA: 'COLLECTION_LESSONS_PAGINATED_RESULTS_DATA',
     REQUEST_CROSS_RESOURCE: 'REQUEST_CROSS_RESOURCE',
     REQUEST_LESSON: 'REQUEST_LESSON',
@@ -272,6 +274,25 @@ MCourserCommunication.prototype.postCollectionCustomTOCState = function (id, sta
 
         var data = collectionCustomTOCState.data;
 
+        if (!data) {
+            return false;
+        }
+
+        return data.id === id;
+    });
+};
+
+MCourserCommunication.prototype.requestCollectionCodeActionAndMarket = function (id) {
+    if (!this.initialized) {
+        throw new Error('This communication is not initialized!');
+    }
+
+    this._sendEvent(this.EVENTS_MAP.REQUEST_COLLECTION_CODE_ACTION_AND_MARKET, {id: id})
+
+    return this._connectIntoEvent(this.EVENTS_MAP.COLLECTION_CODE_ACTION_AND_MARKET,
+        function (collectionCodeActionAndMarket) {
+
+        var data = collectionCodeActionAndMarket.data;
         if (!data) {
             return false;
         }
