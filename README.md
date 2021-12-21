@@ -1,24 +1,39 @@
 # mCourser-iframe-communication
+
 A simple library to simplify communication with mCourser platform.
 
 ### Installation
-In case of usage of this library in a project, you can use https://www.jsdelivr.com/ It helps with providing GitHub files as CND.
+
+In case of usage of this library in a project, you can use https://www.jsdelivr.com/ It helps with providing GitHub
+files as CND.
+
 #### Example:
+
 ```HTML
+
 <script src="https://cdn.jsdelivr.net/gh/icplayer/mCourser-iframe-communication/index.js"></script>
 ```
+
 Or for minified version:
+
 ```HTML
+
 <script src="https://cdn.jsdelivr.net/gh/icplayer/mCourser-iframe-communication/index.min.js"></script>
 ```
 
-Note that, this is latest version of library. It may provide compatibility issues in the future. For more information about serving specific version see: https://www.jsdelivr.com/features
+Note that, this is latest version of library. It may provide compatibility issues in the future. For more information
+about serving specific version see: https://www.jsdelivr.com/features
 
 ### Supported commands:
- * init() - initialize the communication. If the communication is not initialized it is not possible to send messages into mCourser. Returns promise. As promise response returns boolean, which tells if user is authenticated
- * destroy() - destroy initialized communication. All listeners are removed. If mCourser returns data after destroy, response is not managed by communication. Does not have response.
- * updateIframeHeight(newHeight) - Set new height for embeded iframe. Does not have response.
- * requestCollectionsData() - Get all available collections for current user. Requires authenticated user. Returns a response. As the promise response returns: 
+
+* init() - initialize the communication. If the communication is not initialized it is not possible to send messages
+  into mCourser. Returns promise. As promise response returns boolean, which tells if user is authenticated
+* destroy() - destroy initialized communication. All listeners are removed. If mCourser returns data after destroy,
+  response is not managed by communication. Does not have response.
+* updateIframeHeight(newHeight) - Set new height for embeded iframe. Does not have response.
+* requestCollectionsData() - Get all available collections for current user. Requires authenticated user. Returns a
+  response. As the promise response returns:
+
 ```typescript
 interface ICollectionsData {
     data: {
@@ -34,6 +49,7 @@ interface ICollectionsData {
     type: string;
 }
 ```
+
 | Property name | Description |
 | ------------- | ----------- |
 | id            | Id of the collection. This ID is constant |
@@ -45,7 +61,9 @@ interface ICollectionsData {
 | userId        | Logged in user id |
 | userName      | Logged in user name|
 
- * requestCollectionId() - Get collection ID associated with specific custom TOC. Returns promise. As the promise response returns: 
+* requestCollectionId() - Get collection ID associated with specific custom TOC. Returns promise. As the promise
+  response returns:
+
 ```typescript
 interface ICollectionId {
     type: CommunicationEvent.COLLECTION_ID;
@@ -61,38 +79,41 @@ interface ICollectionId {
 | ----------------------------------| ----------- |
 | collectionId                      | Id of the collection associated with specific custom TOC. |
 
- * requestCollectionData(collectionId) - Get information about specific collection. Returns promise. As the promise response returns: 
+* requestCollectionData(collectionId) - Get information about specific collection. Returns promise. As the promise
+  response returns:
+
 ```typescript
 interface ICollectionData {
-        type: string;
-        data: {
+    type: string;
+    data: {
+        id: number;
+        mAuthorId: number;
+        lessons: {
+            id: string;
+            name: string;
+            type: 'mauthor_lesson' | 'mauthor_ebook' | 'minstructor_lesson' | 'demo_lesson' | 'url_link' | 'file';
+            chapter: number | null;
+            icon: string;
+            description: string;
+            definedId: string;
+            errors: number;
+            extented_metadata: [];
+            tags: string;
+            time: number;
+            score: number;
+        }[];
+        chapters: {
             id: number;
-            mAuthorId: number;
-            lessons: {
-                id: string;
-                name: string;
-                type: 'mauthor_lesson' |'mauthor_ebook' | 'minstructor_lesson' | 'demo_lesson' | 'url_link' | 'file';
-                chapter: number | null;
-                icon: string;
-                description: string;
-                definedId: string;
-                errors: number;
-                extented_metadata: [];
-                tags: string;
-                time: number;
-                score: number;
-            }[];
-            chapters: {
-                id: number;
-                parent: number;
-                title: string;
-                description: string;
-            }[];
-            userId: number;
-            userName: string;
-        };
-    }
+            parent: number;
+            title: string;
+            description: string;
+        }[];
+        userId: number;
+        userName: string;
+    };
+}
 ```
+
 #### Collection description:
 
 | Property name | Description |
@@ -101,7 +122,7 @@ interface ICollectionData {
 | mAuthorId     | Id of the collection received from mAuthor. This ID can be found in courses to export management on mAuthor side (in brackets).            |
 | lessons       | List of lessons in the course. See [Lessons description](#lesson-description) |
 | chapters      | List of chapters in the course. See [Chapters description](#chapter-description)|
- 
+
 #### Lesson description:
 
 | Property name      | Description |
@@ -135,12 +156,15 @@ interface ICollectionData {
 | userId        | Logged in user id |
 | userName      | Logged in user name|
 
+* requestCollectionDataByURL(publisherURL, collectionURL) - Get public information about collection by collection and
+  publisher URLs. Returns promise.
+    * publisherURL - URL of the publisher defined on mCourser. Publisher URL is available in mCourser publisher panel,
+      in publisher configuration (URL address input).
+    * collectionURL - URL of the collection. This address is available in collections management. In specific course
+      management there is available adress URL input.
 
- * requestCollectionDataByURL(publisherURL, collectionURL) - Get public information about collection by collection and publisher URLs. Returns promise.
-     * publisherURL - URL of the publisher defined on mCourser. Publisher URL is available in mCourser publisher panel, in publisher configuration (URL address input). 
-     * collectionURL - URL of the collection. This address is available in collections management. In specific course management there is available adress URL input.
-     
- As promise responses:
+As promise responses:
+
 ```typescript
 interface IPublicCollectionData {
     type: string;
@@ -154,14 +178,14 @@ interface IPublicCollectionData {
             icon: string;
             title: string;
             description: string;
-            type: 'mauthor_lesson' |'mauthor_ebook' | 'minstructor_lesson' | 'demo_lesson' | 'url_link' | 'file';
+            type: 'mauthor_lesson' | 'mauthor_ebook' | 'minstructor_lesson' | 'demo_lesson' | 'url_link' | 'file';
         }[];
         sampleLessonsDescription: string;
         screenShots: string[];
         screenShotsDescription: string;
         lessons: {
             name: string;
-            type: 'mauthor_lesson' |'mauthor_ebook' | 'minstructor_lesson' | 'demo_lesson' | 'url_link' | 'file';
+            type: 'mauthor_lesson' | 'mauthor_ebook' | 'minstructor_lesson' | 'demo_lesson' | 'url_link' | 'file';
             chapter: number | null;
             icon: string;
             description: string;
@@ -192,8 +216,10 @@ Because this API is available for anonymous users, there is no information about
 | screenShotsDescription    | Description of the screenshots added to the course |
 | lessons                   | List of lessons. Most of properties match [Lesson description](#lesson-description). |
 | chapters                  | See [Chapters description](#chapter-description) for chapters dict information |
- 
- * requestCollectionExternalResources() - get external resources associated with specific collection. Returns promise. As the promise response returns:
+
+* requestCollectionExternalResources() - get external resources associated with specific collection. Returns promise. As
+  the promise response returns:
+
 ```typescript
 interface ICollectionExternalResources {
     type: CommunicationEvent.COLLECTION_EXTERNAL_RESOURCES;
@@ -218,7 +244,6 @@ interface ICollectionExternalResources {
 | courseId          | Id of the collection. |
 | externalResources | External resources associated with specific collection. See [External resource](#external-resource-description). |
 
-
 #### External resource description:
 
 | Property name      | Description |
@@ -230,19 +255,26 @@ interface ICollectionExternalResources {
 | label              | External resource's label. |
 | url                | External resource's URL. |
 
- * requestCrossResource(resourceId, definedId, mAuthorCourseId, pageId, lessonType) - Open new lesson from different or the same course. 
-   * Resource id is any lesson id in selected publisher. It means that you need to retrieve at least one lesson from the API in case of cross lesson request.
-   If course ID is set, this parameter is also required, additionally lesson publisher == course publisher.
-   Remember, course id is const, but lesson id may be changed when course is re-imported.
-   * definedId is id defined on mAuthor for specific lesson. See [Lessons description](#lesson-description).
-   * mAuthorCourseId is id of course on mAuthor. This argument is optional. See [Collection description:](#collection-description) 
-   * pageId is page id visible in mAuthor lesson editor. This argument is optional. 
-   * lessonType - lesson can be 'ebook' type or 'lesson' type. 'lesson' is set as default. 
-   
-   This method does not return data. User may not have access to selected lesson. If courseId is not set, lesson is selected relative to resourceId.
- * requestLoginView() - Open login view in mCourser Application.
- * requestOpenLesson(lessonId) - open lesson by lesson id field. This method does not return data. Remember, lesson id may be changed for example when the course is re-imported.
- * requestCollectionCustomTOCFirstVisitDate(collectionId) - Get specific collection's custom TOC first visit date. Returns promise. As the promise response returns:
+* requestCrossResource(resourceId, definedId, mAuthorCourseId, pageId, lessonType) - Open new lesson from different or
+  the same course.
+    * Resource id is any lesson id in selected publisher. It means that you need to retrieve at least one lesson from
+      the API in case of cross lesson request. If course ID is set, this parameter is also required, additionally lesson
+      publisher == course publisher. Remember, course id is const, but lesson id may be changed when course is
+      re-imported.
+    * definedId is id defined on mAuthor for specific lesson. See [Lessons description](#lesson-description).
+    * mAuthorCourseId is id of course on mAuthor. This argument is optional.
+      See [Collection description:](#collection-description)
+    * pageId is page id visible in mAuthor lesson editor. This argument is optional.
+    * lessonType - lesson can be 'ebook' type or 'lesson' type. 'lesson' is set as default.
+
+  This method does not return data. User may not have access to selected lesson. If courseId is not set, lesson is
+  selected relative to resourceId.
+* requestLoginView() - Open login view in mCourser Application.
+* requestOpenLesson(lessonId) - open lesson by lesson id field. This method does not return data. Remember, lesson id
+  may be changed for example when the course is re-imported.
+* requestCollectionCustomTOCFirstVisitDate(collectionId) - Get specific collection's custom TOC first visit date.
+  Returns promise. As the promise response returns:
+
 ```typescript
 interface ICollectionCustomTOCFirstVisitDate {
     type: CommunicationEvent.COLLECTION_CUSTOM_TOC_FIRST_VISIT_DATE_DATA;
@@ -252,6 +284,7 @@ interface ICollectionCustomTOCFirstVisitDate {
     };
 }
 ```
+
 #### Collection's custom TOC first visit date description:
 
 | Property name                     | Description |
@@ -259,7 +292,9 @@ interface ICollectionCustomTOCFirstVisitDate {
 | id                                | Id of the collection. |
 | collectionCustomTOCFirstVisitDate | Date of collection's custom TOC first visit by the logged-in user. |
 
-* postCollectionCustomTOCFirstVisitDate(collectionId) - Post and return specific collection's custom TOC first visit date. Returns promise. As the promise response returns:
+* postCollectionCustomTOCFirstVisitDate(collectionId) - Post and return specific collection's custom TOC first visit
+  date. Returns promise. As the promise response returns:
+
 ```typescript
 interface ICollectionCustomTOCFirstVisitDate {
     type: CommunicationEvent.COLLECTION_CUSTOM_TOC_FIRST_VISIT_DATE_DATA;
@@ -270,7 +305,9 @@ interface ICollectionCustomTOCFirstVisitDate {
 }
 ```
 
- * requestCollectionCustomTOCAndAnyLessonLastVisitsDates(collectionId) - Get specific collection's custom TOC and specific collection's any lesson last visits dates. Returns promise. As the promise response returns:
+* requestCollectionCustomTOCAndAnyLessonLastVisitsDates(collectionId) - Get specific collection's custom TOC and
+  specific collection's any lesson last visits dates. Returns promise. As the promise response returns:
+
 ```typescript
 interface ICollectionCustomTOCAndAnyLessonLastVisitsDates {
     type: CommunicationEvent.COLLECTION_CUSTOM_TOC_AND_ANY_LESSON_LAST_VISITS_DATES_DATA;
@@ -281,6 +318,7 @@ interface ICollectionCustomTOCAndAnyLessonLastVisitsDates {
     };
 }
 ```
+
 #### Collection's custom TOC and any lesson last visits dates description:
 
 | Property name                     | Description |
@@ -289,7 +327,9 @@ interface ICollectionCustomTOCAndAnyLessonLastVisitsDates {
 | collectionCustomTOCLastVisitDate  | Date of collection's custom TOC last visit by the logged-in user. |
 | collectionAnyLessonLastVisitDate  | Date of collection's any lesson last visit by the logged-in user. |
 
- * postCollectionCustomTOCLastVisitDate(collectionId) - Post specific collection's custom TOC and return specific collection's custom TOC and any lesson last visits dates. Returns promise. As the promise response returns:
+* postCollectionCustomTOCLastVisitDate(collectionId) - Post specific collection's custom TOC and return specific
+  collection's custom TOC and any lesson last visits dates. Returns promise. As the promise response returns:
+
 ```typescript
 interface ICollectionCustomTOCAndAnyLessonLastVisitsDates {
     type: CommunicationEvent.COLLECTION_CUSTOM_TOC_AND_ANY_LESSON_LAST_VISITS_DATES_DATA;
@@ -300,26 +340,14 @@ interface ICollectionCustomTOCAndAnyLessonLastVisitsDates {
     };
 }
 ```
-For parameters description see [Collection's custom TOC and any lesson last visits dates description](#Collection's custom TOC and any lesson last visits dates description:).
 
-* requestCollectionCustomTOCState(collectionId) - Get specific collection's custom TOC state. Returns promise. As the promise response returns:
-```typescript
-interface ICollectionCustomTOCState {
-    type: CommunicationEvent.COLLECTION_CUSTOM_TOC_STATE_DATA;
-    data: {
-        id: number;
-        collectionCustomTOCState: string;
-    };
-}
-```
-#### Collection's custom TOC state description:
+For parameters description
+see [Collection's custom TOC and any lesson last visits dates description](#Collection's custom TOC and any lesson last visits dates description:)
+.
 
-| Property name                     | Description |
-| ----------------------------------| ----------- |
-| id                                | Id of the collection. |
-| collectionCustomTOCState          | State of collection's custom TOC associated with the logged-in user. |
+* requestCollectionCustomTOCState(collectionId) - Get specific collection's custom TOC state. Returns promise. As the
+  promise response returns:
 
-* postCollectionCustomTOCState(collectionId) - Post and return specific collection's custom TOC state. Returns promise. As the promise response returns:
 ```typescript
 interface ICollectionCustomTOCState {
     type: CommunicationEvent.COLLECTION_CUSTOM_TOC_STATE_DATA;
@@ -337,7 +365,29 @@ interface ICollectionCustomTOCState {
 | id                                | Id of the collection. |
 | collectionCustomTOCState          | State of collection's custom TOC associated with the logged-in user. |
 
-* requestCollectionCodeActionAndMarketData(collectionId) - Get information about specific collection's code action and market (publisher). These parameters are obtained from P3 data-stream. As the promise response returns:
+* postCollectionCustomTOCState(collectionId) - Post and return specific collection's custom TOC state. Returns promise.
+  As the promise response returns:
+
+```typescript
+interface ICollectionCustomTOCState {
+    type: CommunicationEvent.COLLECTION_CUSTOM_TOC_STATE_DATA;
+    data: {
+        id: number;
+        collectionCustomTOCState: string;
+    };
+}
+```
+
+#### Collection's custom TOC state description:
+
+| Property name                     | Description |
+| ----------------------------------| ----------- |
+| id                                | Id of the collection. |
+| collectionCustomTOCState          | State of collection's custom TOC associated with the logged-in user. |
+
+* requestCollectionCodeActionAndMarketData(collectionId) - Get information about specific collection's code action and
+  market (publisher). These parameters are obtained from P3 data-stream. As the promise response returns:
+
 ```typescript
 interface ICollectionCodeActionAndMarket {
     type: CommunicationEvent.COLLECTION_CODE_ACTION_AND_MARKET;
@@ -356,9 +406,10 @@ interface ICollectionCodeActionAndMarket {
 | id                      | Id of the collection. |
 | collectionCodeAction    | List of collection's code actions obtained from P3 data-stream. |
 | collectionMarket        | Collection's market (publisher) obtained from P3 data-stream.  |
- 
 
-* requestCollectionLessonsPaginatedResults(collectionId) - Get information about specific collection's lessons' paginated results. Returns promise. As the promise response returns:
+* requestCollectionLessonsPaginatedResults(collectionId) - Get information about specific collection's lessons'
+  paginated results. Returns promise. As the promise response returns:
+
 ```typescript
 interface ICollectionLessonsPaginatedResultsData {
     type: CommunicationEvent.COLLECTION_LESSONS_PAGINATED_RESULTS_DATA;
@@ -368,7 +419,16 @@ interface ICollectionLessonsPaginatedResultsData {
     };
 }
 ```
+
+#### Collection's lessons' paginated results description:
+
+| Property name           | Description |
+| -------------           | ----------- |
+| id                      | Id of the collection. |
+| lessonsPaginatedResults | List of lessons with paginated results scored by the logged-in user. See [Lessons paginated results description](#lessons-paginated-results-description). |
+
 The ILessonPaginatedResultsData interface has a following from:
+
 ```typescript
 interface ILessonPaginatedResultsData {
     lessonID: number;
@@ -376,33 +436,85 @@ interface ILessonPaginatedResultsData {
 }
 ```
 
-#### Collection's lessons' paginated results description:
-
-| Property name           | Description |
-| -------------           | ----------- |
-| id                      | Id of the collection. |
-| lessonsPaginatedResults | List of lessons with paginated results scored by the logged-in user. See [Lessons paginated resutls description](#lessons-paginated-results-description). |
- 
-#### Lesson's paginated results description:
+#### ILessonPaginatedResultsData interface description:
 
 | Property name          | Description |
 | -------------          | ----------- |
 | lessonID               | Id of the lesson.|
 | lessonPaginatedResults | List of lesson's pages with results scored by the logged-in user. |
 
+#### The PageScore class has the following parameters::
 
- ### Example usage:
+| Property name          | Description |
+| -------------          | ----------- |
+| pageNumber             | Number of the lesson's given page. |
+| pageName               | Name of the lesson's given page. |
+| percentScore           | Percentage score of the lesson's given page. |
+| errorsCount            | Errors count of the lesson's given page. |
+| checksCount            | Checks count of the lesson's given page. |
+| mistakesCount          | Mistakes count of the lesson's given page. |
+| time                   | Time spent on the lesson's given page. |
+
+The exemplary complete response from the requestCollectionLessonsPaginatedResults method looks as follows:
+
+```JSON
+{
+  "id": 5668211466960896,
+  "lessonsPaginatedResults": [
+    {
+      "lessonID": 5125300824309760,
+      "lessonPaginatedResults": [
+        {
+          "pageNumber": 1,
+          "pageName": "Introduction",
+          "percentScore": 100,
+          "errorsCount": 0,
+          "checksCount": 0,
+          "mistakesCount": 0,
+          "time": 4403
+        },
+        {
+          "pageNumber": 2,
+          "pageName": "Second Page",
+          "percentScore": 90,
+          "errorsCount": 1,
+          "checksCount": 2,
+          "mistakesCount": 1,
+          "time": 5032
+        }
+      ]
+    },
+    {
+      "lessonID": 5125300824309761,
+      "lessonPaginatedResults": [
+        {
+          "pageNumber": 1,
+          "pageName": "Welcome",
+          "percentScore": 100,
+          "errorsCount": 0,
+          "checksCount": 0,
+          "mistakesCount": 0,
+          "time": 2032
+        }
+      ]
+    }
+  ]
+}
+```
+
+### Example usage:
+
  ```Javascript
  var communication = new MCourserCommunication();
- communication.init().then(function (isAuth) {
-     if (!isAuth) {
-         renderExamplesPage();
-     } else {
-         communication.requestCollectionsData().then(function (collections) {
-             renderCollection(collections);
-         });
-     }
- });
+communication.init().then(function (isAuth) {
+    if (!isAuth) {
+        renderExamplesPage();
+    } else {
+        communication.requestCollectionsData().then(function (collections) {
+            renderCollection(collections);
+        });
+    }
+});
  ```
 
- For more usage see examples directory.
+For more usage see examples directory.
