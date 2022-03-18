@@ -50,16 +50,16 @@ interface ICollectionsData {
 }
 ```
 
-| Property name | Description |
-| ------------- | ----------- |
-| id            | Id of the collection. This ID is constant |
-| mAuthorId     | Id of the collection received from mAuthor. This ID can be found in courses to export management on mAuthor side (in brackets)            |
-| title         | The title of the collection |
-| score         | The score of the student in the lessons |
-| errors        | Errors of the student in the lessons |
-| time          | The time spent in the lessons by the user |
-| userId        | Logged in user id |
-| userName      | Logged in user name|
+| Property name | Description                                                                                                                    |
+|---------------|--------------------------------------------------------------------------------------------------------------------------------|
+| id            | Id of the collection. This ID is constant                                                                                      |
+| mAuthorId     | Id of the collection received from mAuthor. This ID can be found in courses to export management on mAuthor side (in brackets) |
+| title         | The title of the collection                                                                                                    |
+| score         | The score of the student in the lessons                                                                                        |
+| errors        | Errors of the student in the lessons                                                                                           |
+| time          | The time spent in the lessons by the user                                                                                      |
+| userId        | Logged in user id                                                                                                              |
+| userName      | Logged in user name                                                                                                            |
 
 * requestCollectionId() - Get collection ID associated with specific custom TOC. Returns promise. As the promise
   response returns:
@@ -75,15 +75,15 @@ interface ICollectionId {
 
 #### Collection's ID description:
 
-| Property name                     | Description |
-| ----------------------------------| ----------- |
-| collectionId                      | Id of the collection associated with specific custom TOC. |
+| Property name | Description                                               |
+|---------------|-----------------------------------------------------------|
+| collectionId  | Id of the collection associated with specific custom TOC. |
 
 * requestCollectionData(collectionId) - Get information about specific collection. Returns promise. As the promise
   response returns:
 
 ```typescript
-interface ICollectionData {
+interface ICollection {
     type: string;
     data: {
         id: number;
@@ -97,7 +97,7 @@ interface ICollectionData {
             description: string;
             definedId: string;
             errors: number;
-            extented_metadata: [];
+            extentedMetadata: [];
             tags: string;
             time: number;
             score: number;
@@ -116,45 +116,125 @@ interface ICollectionData {
 
 #### Collection description:
 
-| Property name | Description |
-| ------------- | ----------- |
-| id            | Id of the collection. This ID is constant |
-| mAuthorId     | Id of the collection received from mAuthor. This ID can be found in courses to export management on mAuthor side (in brackets).            |
-| lessons       | List of lessons in the course. See [Lessons description](#lesson-description) |
-| chapters      | List of chapters in the course. See [Chapters description](#chapter-description)|
-
+| Property name | Description                                                                                                                     |
+|---------------|---------------------------------------------------------------------------------------------------------------------------------|
+| id            | Id of the collection. This ID is constant                                                                                       |
+| mAuthorId     | Id of the collection received from mAuthor. This ID can be found in courses to export management on mAuthor side (in brackets). |
+| lessons       | List of lessons in the course. See [Lessons description](#lesson-description)                                                   |
+| chapters      | List of chapters in the course. See [Chapters description](#chapter-description)                                                |
 #### Lesson description:
 
-| Property name      | Description |
-| -------------------| ----------- |
-| id                 | Id of the lesson. WARNING! This id may be changed (It is not const). Do not use it to match lessons! |
-| name               | Name of the lesson. |
-| type               | Type of the lesson. Available types: mauthor_lesson, mauthor_ebook, minstructor_lesson, demo_lesson, url_link, file
-| chapter            | Id of the chapter where the lesson is assigned. If null, the lesson is without any chapter |
-| icon               | Icon URL of the lesson. Warning! The icon URL is in format: "/file/serve/[id]" |
-| description        | Description of the lesson extracted from the lesson definition. |
-| definedId          | The defined ID of the lesson. This id is defined on mAuthor side in a metadata definition. It's preferred way to match specific lesson. |
-| errors             | Number of errors which have been received by the user. |
-| extended_metadata  | Lesson's metadata containing i.e. lesson_category. |
-| tags               | String with comma separated tags associated with specific lesson, i.e. school_grade, subject |
-| time               | How long the user spent in the lesson. |
-| score              | The score which have been received by the user. |
+| Property name    | Description                                                                                                                             |
+|------------------|-----------------------------------------------------------------------------------------------------------------------------------------|
+| id               | Id of the lesson. WARNING! This id may be changed (It is not const). Do not use it to match lessons!                                    |
+| name             | Name of the lesson.                                                                                                                     |
+| type             | Type of the lesson. Available types: mauthor_lesson, mauthor_ebook, minstructor_lesson, demo_lesson, url_link, file                     |
+| chapter          | Id of the chapter where the lesson is assigned. If null, the lesson is without any chapter                                              |
+| icon             | Icon URL of the lesson. Warning! The icon URL is in format: "/file/serve/[id]"                                                          |
+| description      | Description of the lesson extracted from the lesson definition.                                                                         |
+| definedId        | The defined ID of the lesson. This id is defined on mAuthor side in a metadata definition. It's preferred way to match specific lesson. |
+| errors           | Number of errors which have been received by the user.                                                                                  |
+| extendedMetadata | Lesson's metadata containing i.e. lesson_category.                                                                                      |
+| tags             | String with comma separated tags associated with specific lesson, i.e. school_grade, subject                                            |
+| time             | How long the user spent in the lesson.                                                                                                  |
+| score            | The score which have been received by the user.                                                                                         |                                                                                                      |
 
 #### Chapter description:
 
-| Property name | Description |
-| ------------- | ----------- |
-| id            | Id of the chapter. This id may be changed. |
+| Property name | Description                                                            |
+|---------------|------------------------------------------------------------------------|
+| id            | Id of the chapter. This id may be changed.                             |
 | parent        | Parent chapter for this chapter. If empty, chapter do not have parent. |
-| title         | The title of the chapter. |
-| description   | The description of the chapter. |
+| title         | The title of the chapter.                                              |
+| description   | The description of the chapter.                                        |
 
 #### User description:
 
-| Property name | Description |
-| ------------- | ----------- |
-| userId        | Logged in user id |
-| userName      | Logged in user name|
+| Property name | Description         |
+|---------------|---------------------|
+| userId        | Logged in user id   |
+| userName      | Logged in user name |
+
+* requestCollectionDataWithFlags(collectionId) - Get information about specific collection. Returned data is extended with additional flags related do adaptive scripts. Returns promise. As the promise
+  response returns:
+
+```typescript
+interface ICollection {
+    type: string;
+    data: {
+        id: number;
+        mAuthorId: number;
+        lessons: {
+            id: string;
+            name: string;
+            type: 'mauthor_lesson' | 'mauthor_ebook' | 'minstructor_lesson' | 'demo_lesson' | 'url_link' | 'file';
+            chapter: number | null;
+            icon: string;
+            description: string;
+            definedId: string;
+            errors: number;
+            extentedMetadata: [];
+            tags: string;
+            time: number;
+            score: number;
+            isUnlocked: boolean;
+        }[];
+        chapters: {
+            id: number;
+            parent: number;
+            title: string;
+            description: string;
+        }[];
+        userId: number;
+        userName: string;
+        isAssignment: boolean;
+    };
+}
+```
+
+#### Collection description:
+
+| Property name | Description                                                                                                                     |
+|---------------|---------------------------------------------------------------------------------------------------------------------------------|
+| id            | Id of the collection. This ID is constant                                                                                       |
+| mAuthorId     | Id of the collection received from mAuthor. This ID can be found in courses to export management on mAuthor side (in brackets). |
+| lessons       | List of lessons in the course. See [Lessons description](#lesson-description)                                                   |
+| chapters      | List of chapters in the course. See [Chapters description](#chapter-description)                                                |
+| isAdaptive    | Parameter indicating whether the collection is adaptive or not.                                                                 |
+
+#### Lesson description:
+
+| Property name    | Description                                                                                                                             |
+|------------------|-----------------------------------------------------------------------------------------------------------------------------------------|
+| id               | Id of the lesson. WARNING! This id may be changed (It is not const). Do not use it to match lessons!                                    |
+| name             | Name of the lesson.                                                                                                                     |
+| type             | Type of the lesson. Available types: mauthor_lesson, mauthor_ebook, minstructor_lesson, demo_lesson, url_link, file                     |
+| chapter          | Id of the chapter where the lesson is assigned. If null, the lesson is without any chapter                                              |
+| icon             | Icon URL of the lesson. Warning! The icon URL is in format: "/file/serve/[id]"                                                          |
+| description      | Description of the lesson extracted from the lesson definition.                                                                         |
+| definedId        | The defined ID of the lesson. This id is defined on mAuthor side in a metadata definition. It's preferred way to match specific lesson. |
+| errors           | Number of errors which have been received by the user.                                                                                  |
+| extendedMetadata | Lesson's metadata containing i.e. lesson_category.                                                                                      |
+| tags             | String with comma separated tags associated with specific lesson, i.e. school_grade, subject                                            |
+| time             | How long the user spent in the lesson.                                                                                                  |
+| score            | The score which have been received by the user.                                                                                         |                                                                                                      |
+| isUnlocked       | Boolean parameter indicating whether the lesson is unlocked or not in relation to the course adaptive script                            |                                                                                                      |
+
+#### Chapter description:
+
+| Property name | Description                                                            |
+|---------------|------------------------------------------------------------------------|
+| id            | Id of the chapter. This id may be changed.                             |
+| parent        | Parent chapter for this chapter. If empty, chapter do not have parent. |
+| title         | The title of the chapter.                                              |
+| description   | The description of the chapter.                                        |
+
+#### User description:
+
+| Property name | Description         |
+|---------------|---------------------|
+| userId        | Logged in user id   |
+| userName      | Logged in user name |
 
 * requestCollectionDataByURL(publisherURL, collectionURL) - Get public information about collection by collection and
   publisher URLs. Returns promise.
@@ -204,18 +284,18 @@ interface IPublicCollectionData {
 
 Because this API is available for anonymous users, there is no information about score, time etc.
 
-| Property name             | Description |
-| ------------------------- | ----------- |
-| id                        | Id of the collection. |
-| mAuthorId                 | Collection id defined on mAuthor side. See [Collection description:](#collection-description) for more information. |
-| collectionURL             | Collection URL See method definition for more information |
-| publisherURL              | Publisher URL. See method definition for more information. |
-| sampleLessons             | List of samples lessons. Most of properties match [Lesson description](#lesson-description) |
-| sampleLessonsDescription  | Description of samples lessons. |
-| screenShots               | List of screenshots added to the course. Warning: these URLS are in format: "/file/serve/[id]" |
-| screenShotsDescription    | Description of the screenshots added to the course |
-| lessons                   | List of lessons. Most of properties match [Lesson description](#lesson-description). |
-| chapters                  | See [Chapters description](#chapter-description) for chapters dict information |
+| Property name            | Description                                                                                                         |
+|--------------------------|---------------------------------------------------------------------------------------------------------------------|
+| id                       | Id of the collection.                                                                                               |
+| mAuthorId                | Collection id defined on mAuthor side. See [Collection description:](#collection-description) for more information. |
+| collectionURL            | Collection URL See method definition for more information                                                           |
+| publisherURL             | Publisher URL. See method definition for more information.                                                          |
+| sampleLessons            | List of samples lessons. Most of properties match [Lesson description](#lesson-description)                         |
+| sampleLessonsDescription | Description of samples lessons.                                                                                     |
+| screenShots              | List of screenshots added to the course. Warning: these URLS are in format: "/file/serve/[id]"                      |
+| screenShotsDescription   | Description of the screenshots added to the course                                                                  |
+| lessons                  | List of lessons. Most of properties match [Lesson description](#lesson-description).                                |
+| chapters                 | See [Chapters description](#chapter-description) for chapters dict information                                      |
 
 * requestCollectionExternalResources() - get external resources associated with specific collection. Returns promise. As
   the promise response returns:
@@ -239,21 +319,21 @@ interface ICollectionExternalResources {
 
 #### Collection's external resources description:
 
-| Property name     | Description |
-| ------------------| ----------- |
-| courseId          | Id of the collection. |
+| Property name     | Description                                                                                                      |
+|-------------------|------------------------------------------------------------------------------------------------------------------|
+| courseId          | Id of the collection.                                                                                            |
 | externalResources | External resources associated with specific collection. See [External resource](#external-resource-description). |
 
 #### External resource description:
 
-| Property name      | Description |
-| -------------------| ----------- |
-| course             | Id of the collection. |
-| course_external_id | External id of the course.  |
+| Property name      | Description                                    |
+|--------------------|------------------------------------------------|
+| course             | Id of the collection.                          |
+| course_external_id | External id of the course.                     |
 | cover              | External resource's cover (in form of an URL). |
-| external_id        | External resource's external id. |
-| label              | External resource's label. |
-| url                | External resource's URL. |
+| external_id        | External resource's external id.               |
+| label              | External resource's label.                     |
+| url                | External resource's URL.                       |
 
 * requestCrossResource(resourceId, definedId, mAuthorCourseId, pageId, lessonType) - Open new lesson from different or
   the same course.
@@ -287,9 +367,9 @@ interface ICollectionCustomTOCFirstVisitDate {
 
 #### Collection's custom TOC first visit date description:
 
-| Property name                     | Description |
-| ----------------------------------| ----------- |
-| id                                | Id of the collection. |
+| Property name                     | Description                                                        |
+|-----------------------------------|--------------------------------------------------------------------|
+| id                                | Id of the collection.                                              |
 | collectionCustomTOCFirstVisitDate | Date of collection's custom TOC first visit by the logged-in user. |
 
 * postCollectionCustomTOCFirstVisitDate(collectionId) - Post and return specific collection's custom TOC first visit
@@ -321,11 +401,11 @@ interface ICollectionCustomTOCAndAnyLessonLastVisitsDates {
 
 #### Collection's custom TOC and any lesson last visits dates description:
 
-| Property name                     | Description |
-| --------------------------------- | ----------- |
-| id                                | Id of the collection. |
-| collectionCustomTOCLastVisitDate  | Date of collection's custom TOC last visit by the logged-in user. |
-| collectionAnyLessonLastVisitDate  | Date of collection's any lesson last visit by the logged-in user. |
+| Property name                    | Description                                                       |
+|----------------------------------|-------------------------------------------------------------------|
+| id                               | Id of the collection.                                             |
+| collectionCustomTOCLastVisitDate | Date of collection's custom TOC last visit by the logged-in user. |
+| collectionAnyLessonLastVisitDate | Date of collection's any lesson last visit by the logged-in user. |
 
 * postCollectionCustomTOCLastVisitDate(collectionId) - Post specific collection's custom TOC and return specific
   collection's custom TOC and any lesson last visits dates. Returns promise. As the promise response returns:
@@ -360,10 +440,10 @@ interface ICollectionCustomTOCState {
 
 #### Collection's custom TOC state description:
 
-| Property name                     | Description |
-| ----------------------------------| ----------- |
-| id                                | Id of the collection. |
-| collectionCustomTOCState          | State of collection's custom TOC associated with the logged-in user. |
+| Property name            | Description                                                          |
+|--------------------------|----------------------------------------------------------------------|
+| id                       | Id of the collection.                                                |
+| collectionCustomTOCState | State of collection's custom TOC associated with the logged-in user. |
 
 * postCollectionCustomTOCState(collectionId) - Post and return specific collection's custom TOC state. Returns promise.
   As the promise response returns:
@@ -380,10 +460,10 @@ interface ICollectionCustomTOCState {
 
 #### Collection's custom TOC state description:
 
-| Property name                     | Description |
-| ----------------------------------| ----------- |
-| id                                | Id of the collection. |
-| collectionCustomTOCState          | State of collection's custom TOC associated with the logged-in user. |
+| Property name            | Description                                                          |
+|--------------------------|----------------------------------------------------------------------|
+| id                       | Id of the collection.                                                |
+| collectionCustomTOCState | State of collection's custom TOC associated with the logged-in user. |
 
 * requestCollectionCodeActionAndMarketData(collectionId) - Get information about specific collection's code action and
   market (publisher). These parameters are obtained from P3 data-stream. As the promise response returns:
@@ -401,11 +481,11 @@ interface ICollectionCodeActionAndMarket {
 
 #### Collection's code action and market description:
 
-| Property name           | Description |
-| -------------           | ----------- |
-| id                      | Id of the collection. |
-| collectionCodeAction    | List of collection's code actions obtained from P3 data-stream. |
-| collectionMarket        | Collection's market (publisher) obtained from P3 data-stream.  |
+| Property name        | Description                                                     |
+|----------------------|-----------------------------------------------------------------|
+| id                   | Id of the collection.                                           |
+| collectionCodeAction | List of collection's code actions obtained from P3 data-stream. |
+| collectionMarket     | Collection's market (publisher) obtained from P3 data-stream.   |
 
 * requestCollectionLessonsPaginatedResults(collectionId) - Get information about specific collection's lessons'
   paginated results. Returns promise. As the promise response returns:
@@ -445,15 +525,15 @@ interface ILessonPaginatedResultsData {
 
 #### The PageScore class has the following parameters::
 
-| Property name          | Description |
-| -------------          | ----------- |
-| pageNumber             | Number of the lesson's given page. |
-| pageName               | Name of the lesson's given page. |
-| percentScore           | Percentage score of the lesson's given page. |
-| errorsCount            | Errors count of the lesson's given page. |
-| checksCount            | Checks count of the lesson's given page. |
-| mistakesCount          | Mistakes count of the lesson's given page. |
-| time                   | Time spent on the lesson's given page. |
+| Property name | Description                                  |
+|---------------|----------------------------------------------|
+| pageNumber    | Number of the lesson's given page.           |
+| pageName      | Name of the lesson's given page.             |
+| percentScore  | Percentage score of the lesson's given page. |
+| errorsCount   | Errors count of the lesson's given page.     |
+| checksCount   | Checks count of the lesson's given page.     |
+| mistakesCount | Mistakes count of the lesson's given page.   |
+| time          | Time spent on the lesson's given page.       |
 
 The exemplary complete response from the requestCollectionLessonsPaginatedResults method looks as follows:
 

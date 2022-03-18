@@ -12,6 +12,7 @@ MCourserCommunication.prototype.EVENTS_MAP = {
     REQUEST_COLLECTIONS_DATA: 'REQUEST_COLLECTIONS_DATA',
     REQUEST_COLLECTION_ID: 'REQUEST_COLLECTION_ID',
     REQUEST_COLLECTION_DATA: 'REQUEST_COLLECTION_DATA',
+    REQUEST_COLLECTION_DATA_WITH_FLAGS: 'REQUEST_COLLECTION_DATA_WITH_FLAGS',
     REQUEST_COLLECTION_EXTERNAL_RESOURCES: 'REQUEST_COLLECTION_EXTERNAL_RESOURCES',
     REQUEST_COLLECTION_CUSTOM_TOC_FIRST_VISIT_DATE_DATA: 'REQUEST_COLLECTION_CUSTOM_TOC_FIRST_VISIT_DATE_DATA',
     POST_COLLECTION_CUSTOM_TOC_FIRST_VISIT_DATE_DATA: 'POST_COLLECTION_CUSTOM_TOC_FIRST_VISIT_DATE_DATA',
@@ -23,6 +24,7 @@ MCourserCommunication.prototype.EVENTS_MAP = {
     COLLECTIONS_DATA: 'COLLECTIONS_DATA',
     COLLECTION_ID: 'COLLECTION_ID',
     COLLECTION_DATA: 'COLLECTION_DATA',
+    COLLECTION_DATA_WITH_FLAGS: 'COLLECTION_DATA_WITH_FLAGS',
     COLLECTION_EXTERNAL_RESOURCES: 'COLLECTION_EXTERNAL_RESOURCES',
     COLLECTION_CUSTOM_TOC_FIRST_VISIT_DATE_DATA: 'COLLECTION_CUSTOM_TOC_FIRST_VISIT_DATE_DATA',
     COLLECTION_CUSTOM_TOC_AND_ANY_LESSON_LAST_VISITS_DATES_DATA: 'COLLECTION_CUSTOM_TOC_AND_ANY_LESSON_LAST_VISITS_DATES_DATA',
@@ -106,6 +108,22 @@ MCourserCommunication.prototype.requestCollectionData = function (id) {
     this._sendEvent(this.EVENTS_MAP.REQUEST_COLLECTION_DATA, {id: id})
     return this._connectIntoEvent(this.EVENTS_MAP.COLLECTION_DATA, function (collectionData) {
         var data = collectionData.data;
+        if (!data) {
+            return false;
+        }
+
+        return data.id === id;
+    });
+};
+
+MCourserCommunication.prototype.requestCollectionDataWithFlags = function (id) {
+    if (!this.initialized) {
+        throw new Error('This communication is not initialized!');
+    }
+
+    this._sendEvent(this.EVENTS_MAP.REQUEST_COLLECTION_DATA_WITH_FLAGS, {id: id})
+    return this._connectIntoEvent(this.EVENTS_MAP.COLLECTION_DATA_WITH_FLAGS, function (collectionDataWithFlags) {
+        var data = collectionDataWithFlags.data;
         if (!data) {
             return false;
         }
