@@ -92,20 +92,13 @@ MCourserCommunication.prototype.requestCollectionsData = function () {
 };
 
 
-MCourserCommunication.prototype.requestUserData = function (id) {
+MCourserCommunication.prototype.requestUserData = function () {
     if (!this.initialized) {
         throw new Error('This communication is not initialized!');
     }
 
-    this._sendEvent(this.EVENTS_MAP.REQUEST_USER_DATA, {id: id})
-    return this._connectIntoEvent(this.EVENTS_MAP.REQUEST_USER_DATA, function (userData) {
-        var data = userData.data;
-        if (!data) {
-            return false;
-        }
-
-        return data.id === id;
-    });
+    this._sendEvent(this.EVENTS_MAP.REQUEST_USER_DATA, {})
+    return this._connectIntoEvent(this.EVENTS_MAP.REQUEST_USER_DATA);
 };
 
 MCourserCommunication.prototype.requestCollectionId = function () {
