@@ -61,6 +61,33 @@ interface ICollectionsData {
 | userId        | Logged in user id                                                                                                              |
 | userName      | Logged in user name                                                                                                            |
 
+* requestUserData() - Get user data for current user. Requires authenticated user. Returns a response. 
+  As the promise response returns:
+```typescript
+interface IUserData {
+    id: number;
+    type: CommunicationEvent.REQUEST_USER_DATA;
+    user_is_authenticated: boolean;
+    role: 'school_admin' | 'teacher' | 'student' | 'parent' | 'student';
+    school: string;
+    children: number[];
+    teacher_students: number[];
+}
+```
+
+#### User Data description:
+
+| Property name | Description                                                                                                                     |
+|---------------|---------------------------------------------------------------------------------------------------------------------------------|
+| id                     | ID of the user. This ID is constant                                                                                             |
+| type                   | Type of the request                                                                                                             |
+| user_is_authenticated  | Is user authenticated                                                                                              |
+| role                   | User role.
+| school                 | School ID.    
+| children               | List of children's IDs.  
+| teacher_students       | List of student's IDs.   
+
+
 * requestCollectionId() - Get collection ID associated with specific custom TOC. Returns promise. As the promise
   response returns:
 
