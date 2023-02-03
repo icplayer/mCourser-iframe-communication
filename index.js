@@ -38,7 +38,8 @@ MCourserCommunication.prototype.EVENTS_MAP = {
     COLLECTION_DATA_BY_URL: 'COLLECTION_DATA_BY_URL',
     REQUEST_FIRESTORE_CUSTOM_TOKEN: 'REQUEST_FIRESTORE_CUSTOM_TOKEN',
     FIRESTORE_CUSTOM_TOKEN: 'FIRESTORE_CUSTOM_TOKEN',
-    REQUEST_LOGIN_VIEW: 'REQUEST_LOGIN_VIEW'
+    REQUEST_LOGIN_VIEW: 'REQUEST_LOGIN_VIEW',
+    USER_DATA: 'USER_DATA'
 };
 
 MCourserCommunication.prototype.init = function () {
@@ -98,7 +99,7 @@ MCourserCommunication.prototype.requestUserData = function () {
     }
 
     this._sendEvent(this.EVENTS_MAP.REQUEST_USER_DATA, {})
-    return this._connectIntoEvent(this.EVENTS_MAP.REQUEST_USER_DATA);
+    return this._connectIntoEvent(this.EVENTS_MAP.USER_DATA);
 };
 
 MCourserCommunication.prototype.requestCollectionId = function () {
