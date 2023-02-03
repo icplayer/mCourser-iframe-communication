@@ -66,7 +66,7 @@ interface ICollectionsData {
 ```typescript
 interface IUserData {
     id: number;
-    type: CommunicationEvent.REQUEST_USER_DATA;
+    type: CommunicationEvent.USER_DATA;
     user_is_authenticated: boolean;
     role: 'school_admin' | 'teacher' | 'student' | 'parent' | 'student';
     school: string;
