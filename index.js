@@ -98,7 +98,7 @@ MCourserCommunication.prototype.requestUserData = function () {
         throw new Error('This communication is not initialized!');
     }
 
-    this._sendEvent(this.EVENTS_MAP.REQUEST_USER_DATA, {})
+    this._sendEvent(this.EVENTS_MAP.REQUEST_USER_DATA, {});
     return this._connectIntoEvent(this.EVENTS_MAP.USER_DATA);
 };
 
