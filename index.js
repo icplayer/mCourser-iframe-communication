@@ -397,7 +397,6 @@ MCourserCommunication.prototype._sendEvent = function (type, data) {
     var copy={};
     Object.assign(copy, data);
     copy['type'] = type;
-    // TODO: change logic below
     this.parent.postMessage(copy, '*')
 };
 
