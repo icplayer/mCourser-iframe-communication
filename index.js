@@ -1,5 +1,6 @@
 function MCourserCommunication () {
     this.top = window.top.window;
+    this.parent = window.parent.window;
     this.initialized = false;
     this.calledInit = false;
     this.eventsListeners = [];
@@ -396,7 +397,7 @@ MCourserCommunication.prototype._sendEvent = function (type, data) {
     var copy={};
     Object.assign(copy, data);
     copy['type'] = type;
-    this.top.postMessage(copy, '*')
+    this.parent.postMessage(copy, '*')
 };
 
 MCourserCommunication.prototype._runMessagesListener = function () {
