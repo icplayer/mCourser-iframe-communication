@@ -81,7 +81,7 @@ MCourserCommunication.prototype.updateIFrameHeight = function (newHeight) {
         throw new Error('This communication is not initialized!');
     }
 
-    this.top.postMessage('mCurriculum_RESIZE:0:' + newHeight, '*');
+    this.parent.postMessage('mCurriculum_RESIZE:0:' + newHeight, '*');
 };
 
 MCourserCommunication.prototype.requestCollectionsData = function () {
